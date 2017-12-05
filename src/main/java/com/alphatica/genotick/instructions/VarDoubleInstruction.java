@@ -20,6 +20,6 @@ abstract class VarDoubleInstruction extends VarInstruction {
     public void mutate(Mutator mutator) {
         super.mutate(mutator);
         doubleArgument = Tools.mutateDouble(doubleArgument, mutator);
-    }
-
+     }
 }
+
