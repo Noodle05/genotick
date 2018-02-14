@@ -15,7 +15,9 @@ public class RobotInfo {
     private final int totalPredictions;
     private final int totalOutcomes;
     private final int bias;
-    private final boolean isPredicting;
+    private final boolean hasPredicted;
+    private final int lastPrediction;
+    private final int age;
 
     public RobotInfo(Robot robot) {
         name = new RobotName(robot.getName().getName());
@@ -26,7 +28,9 @@ public class RobotInfo {
         totalPredictions = robot.getTotalPredictions();
         totalOutcomes = robot.getTotalOutcomes();
         bias = robot.getBias();
-        isPredicting = robot.isPredicting();
+        hasPredicted = robot.hasPredicted();
+        lastPrediction = robot.getLastPrediction();
+        age = robot.getAge();
     }
 
     @Override
@@ -68,7 +72,19 @@ public class RobotInfo {
         return bias;
     }
 
-    public boolean isPredicting() {
-        return isPredicting;
+    public boolean hasPredicted() {
+        return hasPredicted;
+    }
+    
+    public int getLastPrediction() {
+        return lastPrediction;
+    }
+
+    public boolean isPredicting(final int predictionWindow) {
+        return (hasPredicted() && getLastPrediction() < predictionWindow);
+    }
+    
+    public int getAge() {
+        return age;
     }
 }

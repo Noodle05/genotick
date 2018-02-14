@@ -41,14 +41,35 @@ class SimpleRobotKiller implements RobotKiller {
         List<RobotInfo> listCopy = new ArrayList<>(robotInfos);
         removeProtectedRobots(population,listCopy);
         output.debugMessage("protectedRobots=" + (population.getSize() - listCopy.size()));
-        before = population.getSize();
-        killRobotsByWeight(population, listCopy, robotInfos);
-        after = population.getSize();
+        if(this.random.nextBoolean() == true) {
+            killRobotsByWeightThenAge(population, robotInfos, listCopy);
+        } else {
+            killRobotsByAgeThenWeight(population, robotInfos, listCopy);
+        }
+    }
+    
+    private int killRobotsByWeightThenAge(Population population, List<RobotInfo> robotInfos, List<RobotInfo> listCopy) {
+        int before = population.getSize();
+        if(before >= population.getDesiredSize()) killRobotsByWeight(population, listCopy, robotInfos);
+        int after = population.getSize();
         output.debugMessage("killedByWeight=" + (before - after));
         before = after;
-        killRobotsByAge(population, listCopy, robotInfos);
+        if(before >= population.getDesiredSize()) killRobotsByAge(population, listCopy, robotInfos);
         after = population.getSize();
         output.debugMessage("killedByAge=" + (before - after));
+        return after;
+    }
+
+    private int killRobotsByAgeThenWeight(Population population, List<RobotInfo> robotInfos, List<RobotInfo> listCopy) {
+        int before = population.getSize();
+        if(before >= population.getDesiredSize()) killRobotsByAge(population, listCopy, robotInfos);
+        int after = population.getSize();
+        output.debugMessage("killedByAge=" + (before - after));
+        before = after;
+        if(before >= population.getDesiredSize()) killRobotsByWeight(population, listCopy, robotInfos);
+        after = population.getSize();
+        output.debugMessage("killedByWeight=" + (before - after));
+        return after;
     }
 
     private void killNonSymmetricalRobots(Population population, List<RobotInfo> robotInfos) {
@@ -64,10 +85,10 @@ class SimpleRobotKiller implements RobotKiller {
     }
 
     private void killNonPredictingRobots(Population population, List<RobotInfo> robotInfos) {
-        if(settings.killNonPredictingRobots) {
+        if(settings.killNonPredictingRobots > 0) {
             for(int i = robotInfos.size() - 1; i >= 0; i--) {
                 RobotInfo info = robotInfos.get(i);
-                if(!info.isPredicting()) {
+                if(info.getAge() > settings.ageBeforeKillingNonPredictingRobots  && !info.isPredicting(settings.killNonPredictingRobots)) {
                     robotInfos.remove(i);
                     population.removeRobot(info.getName());
                 }
@@ -109,7 +130,6 @@ class SimpleRobotKiller implements RobotKiller {
     private void killRobotsByWeight(Population population, List<RobotInfo> listCopy, List<RobotInfo> originalList) {
         listCopy.sort(RobotInfo.comparatorByAbsoluteWeight);
         Collections.reverse(listCopy);
-
         int numberToKill = (int) Math.round(settings.maximumDeathByWeight * originalList.size());
         killRobots(listCopy,originalList,numberToKill,population,settings.probabilityOfDeathByWeight);
     }

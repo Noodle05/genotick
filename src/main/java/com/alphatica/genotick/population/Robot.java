@@ -38,8 +38,10 @@ public class Robot implements Serializable {
     private double inheritedWeight = 0.0;
     private int totalOutcomes = 0;
     private int outcomesAtLastChild = 0;
+    private boolean hasPredicted = false;
+    private int lastPrediction = 0;
+    private int age=0;
     private int bias = 0;
-    private boolean isPredicting = false;
     private ColumnAccess columnAccess;
 
     private final Map<DataSetName, Prediction> current = new HashMap<>();
@@ -147,7 +149,10 @@ public class Robot implements Serializable {
         RobotResult originalResult = pair.getOriginal();
         Prediction originalPred = originalResult.getPrediction();
         if (originalPred != Prediction.OUT) {
-            isPredicting = true;
+            hasPredicted = true;
+            lastPrediction = 0;
+        } else {
+            lastPrediction++;
         }
         RobotResult reversedResult = pair.getReversed();
         if (reversedResult != null) {
@@ -156,6 +161,7 @@ public class Robot implements Serializable {
                 bias += 1;
             }
         }
+        age++;
     }
 
     private void recordPrediction(RobotResult robotResult) {
@@ -187,8 +193,12 @@ public class Robot implements Serializable {
         return sb.toString();
     }
 
-    public boolean isPredicting() {
-        return isPredicting;
+    public boolean hasPredicted() {
+        return hasPredicted;
+    }
+
+    public int getLastPrediction() {
+        return lastPrediction;
     }
 
     int getTotalChildren() {
@@ -213,6 +223,10 @@ public class Robot implements Serializable {
     
     public void setColumnAccess(final ColumnAccess columnAccess) {
         this.columnAccess = columnAccess; 
+    }
+    
+    public int getAge() {
+        return age;
     }
 
     private Robot(RobotSettings settings, ColumnAccessMergeStrategy columnAccessMergeStrategy, RandomGenerator random) {
@@ -241,5 +255,9 @@ public class Robot implements Serializable {
                         append(field.get(this).toString()).append("\n");
             }
         }
+    }
+    
+    public boolean isPredicting(final int predictionWindow) {
+        return (hasPredicted() && getLastPrediction() < predictionWindow);
     }
 }

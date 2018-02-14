@@ -23,7 +23,7 @@ public class CsvOutput implements UserOutput {
     private Boolean debug = false;
 
     public CsvOutput(String outdir) throws IOException {
-        console = new ConsoleOutput(outdir);
+        console = new ConsoleOutput(outdir, true);
         buildFileNames();
     }
 

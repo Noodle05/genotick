@@ -11,7 +11,8 @@ public class MainSettings {
     public static final int DEFAULT_DESIRED_SIZE = 1_000;
     public static final String DEFAULT_DATA_ACCESS = "";
     public static final long DEFAULT_RANDOM_SEED = 0;
-    public static final boolean DEFAULT_KILL_NON_PREDICTING_ROBOTS = true;
+    public static final int DEFAULT_KILL_NON_PREDICTING_ROBOTS = 1;
+    public static final int DEFAULT_AGE_BEFORE_KILLING_NON_PREDICTING_ROBOTS = 2;
     public static final double DEFAULT_MINIMUM_SCORE_TO_SAVE_TO_DISK = 0.0;
 
     public TimePoint startTimePoint = new TimePoint(0);
@@ -40,7 +41,8 @@ public class MainSettings {
     public double skipInstructionProbability = 0.01;
     public int minimumOutcomesToAllowBreeding = 50;
     public int minimumOutcomesBetweenBreeding = 50;
-    public boolean killNonPredictingRobots = DEFAULT_KILL_NON_PREDICTING_ROBOTS;
+    public int killNonPredictingRobots = DEFAULT_KILL_NON_PREDICTING_ROBOTS;
+    public int ageBeforeKillingNonPredictingRobots = DEFAULT_AGE_BEFORE_KILLING_NON_PREDICTING_ROBOTS;
     public double minimumScoreToSaveToDisk = DEFAULT_MINIMUM_SCORE_TO_SAVE_TO_DISK;
     public double randomRobotsAtEachUpdate = 0.02;
     public double protectBestRobots = 0.02;
@@ -50,7 +52,7 @@ public class MainSettings {
     public long randomSeed = DEFAULT_RANDOM_SEED;
     public GenoChartMode chartMode = GenoChartMode.NONE;
     public double profitReinvestFactor = 1.0;
-    public FilterOption filterOption = FilterOption.EMA_ZEROLAG;
+    public FilterOption filterOption = FilterOption.NONE;
 
     private MainSettings() {
         String minimumScoreString = System.getenv("GENOTICK_MINIMUM_SCORE");
@@ -98,6 +100,8 @@ public class MainSettings {
         ensure(resultThreshold >= 1,atLeastOneString("Result threshold"));
         ensure(ignoreColumns >= 0, atLeastZeroString("Ignore columns"));
         ensure(profitReinvestFactor >= 0, atLeastZeroString("Profit reinvest factor"));
+        ensure(killNonPredictingRobots >= 0, atLeastZeroString("Kill non predicting robots"));
+        ensure(ageBeforeKillingNonPredictingRobots >= 0, atLeastZeroString("Age before killing non predicitng robots"));
     }
 
     private String atLeastZeroString(String s) {

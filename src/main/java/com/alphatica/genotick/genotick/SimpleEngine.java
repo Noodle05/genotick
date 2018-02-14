@@ -47,7 +47,7 @@ public class SimpleEngine implements Engine {
     }
 
     @Override
-    public void start() {
+    public EngineResult start() {
         changeThreadName();
         initPopulation();
         initDataSetFilters();
@@ -58,8 +58,9 @@ public class SimpleEngine implements Engine {
         if (settings.performTraining) {
             savePopulation();
         }
-        account.closeAccount();
+        BigDecimal balance = account.closeAccount();
         profitRecorder.finish();
+        return new EngineResult(balance, population, settings, getPopulationDirName());
     }
 
     @Override

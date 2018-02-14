@@ -9,7 +9,8 @@ public class RobotKillerSettings {
     public final double probabilityOfDeathByWeight;
     public final int protectRobotsUntilOutcomes;
     public final double protectBestRobots;
-    public final boolean killNonPredictingRobots;
+    public final int killNonPredictingRobots;
+    public final int ageBeforeKillingNonPredictingRobots;
     public final boolean requireSymmetricalRobots;
     public final long randomSeed;
     
@@ -21,6 +22,7 @@ public class RobotKillerSettings {
         this.protectRobotsUntilOutcomes = settings.protectRobotsUntilOutcomes;
         this.protectBestRobots = settings.protectBestRobots;
         this.killNonPredictingRobots = settings.killNonPredictingRobots;
+        this.ageBeforeKillingNonPredictingRobots = settings.ageBeforeKillingNonPredictingRobots;
         this.requireSymmetricalRobots = settings.requireSymmetricalRobots;
         this.randomSeed = settings.randomSeed;
     }

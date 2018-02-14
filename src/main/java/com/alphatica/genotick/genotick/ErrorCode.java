@@ -8,7 +8,8 @@ enum ErrorCode {
     INVALID_SESSION(4),
     DUPLICATE_SESSION(5),
     INSUFFICIENT_DATA(6),
-    MISSING_ARGUMENT(7);
+    MISSING_ARGUMENT(7),
+    ENGINE_FAILURE(8);
 
     private final int code;
 

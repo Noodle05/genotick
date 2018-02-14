@@ -7,7 +7,7 @@ import com.alphatica.genotick.population.Population;
 import com.alphatica.genotick.timepoint.TimePointExecutor;
 
 public interface Engine {
-    void start();
+    EngineResult start();
 
     void setSettings(EngineSettings engineSettings,
                      TimePointExecutor timePointExecutor,

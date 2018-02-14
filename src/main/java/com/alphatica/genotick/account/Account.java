@@ -55,11 +55,12 @@ public class Account {
         prices.forEach((name, price) -> closeTrade(name, BigDecimal.valueOf(price)));
     }
 
-    public void closeAccount() {
+    public BigDecimal closeAccount() {
         List<DataSetName> openedTradesNames = new ArrayList<>(trades.keySet());
         openedTradesNames.forEach(name -> closeTrade(name, trades.get(name).getPrice()));
         output.reportAccountClosing(balance);
         profitRecorder.outputWinRateForAllRecords();
+        return balance;
     }
 
     public void addPendingOrder(DataSetName name, Prediction prediction) {

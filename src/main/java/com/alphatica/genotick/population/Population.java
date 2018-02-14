@@ -34,4 +34,7 @@ public interface Population {
     
     Stream<Robot> getRobots();
 
+    public static double populationScore(List<RobotInfo> robotInfoList) {
+        return robotInfoList.stream().mapToDouble(RobotInfo::getScore).average().orElse(0);
+    }
 }

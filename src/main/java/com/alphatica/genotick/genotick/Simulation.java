@@ -23,6 +23,7 @@ import com.alphatica.genotick.utility.TimeCounter;
 import com.alphatica.genotick.utility.Tools;
 
 import static java.lang.String.format;
+
 import java.util.concurrent.TimeUnit;
 
 public class Simulation {
@@ -34,20 +35,22 @@ public class Simulation {
         this.output = output;
     }
 
-    public void start(MainSettings mainSettings, MainAppData data, MainInterface.SessionResult sessionResult, int simulationIteration) throws IllegalAccessException {
+    public EngineResult start(MainSettings mainSettings, MainAppData data, MainInterface.SessionResult sessionResult, int simulationIteration) throws IllegalAccessException {
         output.setIdentifier(Tools.generateCommonIdentifier() + "_i" + simulationIteration);
         output.infoMessage(format("Simulation %s started", output.getIdentifier()));
         TimeCounter simulationRunTime = new TimeCounter("", false);
+        EngineResult engineResult = null;
         if(validateSettings(mainSettings)) {
-            logSettings(mainSettings);
+            if(simulationIteration == 1) logSettings(mainSettings);
             RobotKiller killer = createRobotKiller(mainSettings);
             Mutator mutator = createMutator(mainSettings);
             RobotBreeder breeder = createRobotBreeder(mainSettings, mutator, data.getMaximumColumnCount());
             Population population = createPopulation(mainSettings);
             Engine engine = createEngine(mainSettings, data, killer, breeder, population, sessionResult);
-            engine.start();
+            engineResult = engine.start();
         }
         output.infoMessage(format("Simulation %s finished in %d seconds", output.getIdentifier(), simulationRunTime.stop(TimeUnit.SECONDS)));
+        return engineResult;
     }
 
     private boolean validateSettings(MainSettings settings) {
@@ -100,5 +103,4 @@ public class Simulation {
         String settingsString = settings.getString();
         output.infoMessage(settingsString);
     }
-
 }

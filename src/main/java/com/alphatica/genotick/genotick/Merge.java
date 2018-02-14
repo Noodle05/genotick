@@ -2,8 +2,10 @@ package com.alphatica.genotick.genotick;
 
 import com.alphatica.genotick.population.Population;
 import com.alphatica.genotick.population.PopulationDAOFileSystem;
+import com.alphatica.genotick.population.PopulationSettings;
 import com.alphatica.genotick.population.Robot;
 import com.alphatica.genotick.population.RobotInfo;
+import com.alphatica.genotick.ui.UserOutput;
 
 import java.io.*;
 import java.nio.file.*;
@@ -14,53 +16,81 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 
 class Merge {
-    private Merge() {}
+    private final MainSettings settings;
+    private final UserOutput output;
     
-    public static ErrorCode mergePopulations(String destination, String source) throws IllegalAccessException {
+    public Merge(MainSettings settings, UserOutput output) {
+        this.settings = settings;
+        this.output = output;
+    }
+    
+    public ErrorCode mergePopulations(String destination, String source) throws IllegalAccessException {
+        return mergePopulations(destination, source, null);
+    }
+    
+    public ErrorCode mergePopulations(String destination, List<String> sourceList) throws IllegalAccessException {
+        return mergePopulations(destination, null, sourceList);
+    }
+
+    private ErrorCode mergePopulations(String destination, String source, List<String> sourceList) throws IllegalAccessException {
         File destinationPath = new File(destination);
         destinationPath.mkdirs();
         PopulationDAOFileSystem dao = new PopulationDAOFileSystem(destinationPath.getAbsolutePath());
-        Population destinationPopulation = PopulationFactory.getDefaultPopulation(dao);
+        Population destinationPopulation = settings == null ? 
+                PopulationFactory.getDefaultPopulation(dao) : PopulationFactory.getDefaultPopulation(new PopulationSettings(settings), dao);
         List<RobotInfo> destinationRobots = destinationPopulation.getRobotInfoList();
         destinationRobots.sort(Comparator.comparing(RobotInfo::getScore));
-        double initialScore = populationScore(destinationRobots);
-        System.out.println(format("Current population size: %d desiredSize: %d population score: %.4f", 
+        double initialScore = Population.populationScore(destinationRobots);
+        output.infoMessage(format("Current population size: %d desiredSize: %d population score: %.4f", 
             destinationPopulation.getSize(), destinationPopulation.getDesiredSize(), initialScore));
-        System.out.println(format("Destination path: %s", destinationPath.getAbsolutePath()));
-        try {
-            Files.walk(Paths.get(source), 1)
-                .filter(path -> Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS))
-                .filter(path -> !destinationPath.getAbsolutePath().equals(new File(path.toString().replace("./", "")).getAbsolutePath()))
-                .collect(Collectors.toList())
-                .parallelStream()
-                .forEach(directory -> mergeSource(destinationPopulation, destinationPath.getAbsolutePath(), destinationRobots, directory));
+        output.infoMessage(format("Destination path: %s", destinationPath.getAbsolutePath()));
+        try { 
+            if(source != null) {
+                Files.walk(Paths.get(source), 1)
+                    .filter(path -> Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS))
+                    .filter(path -> !destinationPath.getAbsolutePath().equals(new File(path.toString().replace("./", "")).getAbsolutePath()))
+                    .collect(Collectors.toList())
+                    .parallelStream()
+                    .forEach(directory -> mergeSource(settings, destinationPopulation, destinationPath.getAbsolutePath(), destinationRobots, directory));
+            } 
+            if(sourceList != null) {
+                sourceList
+                    .parallelStream()
+                    .forEach(directory -> mergeSource(settings, destinationPopulation, destinationPath.getAbsolutePath(), destinationRobots, Paths.get(directory)));
+            }
         } catch (IOException e) {
-            // Falling thruogh here just ignores folders with any access errors.
+            // Falling through here just ignores folders with any access errors.
         }
         destinationPopulation.saveOnDisk();
-        double newScore = populationScore(destinationRobots);
+        double newScore = Population.populationScore(destinationRobots);
         if(newScore > initialScore) {
-            System.out.println(format("Success merging populations. New size: %d old score: %.4f new score: %.4f", 
+            output.infoMessage(format("Success merging populations. New size: %d old score: %.4f new score: %.4f", 
                 destinationPopulation.getSize(), initialScore, newScore));
+            output.infoMessage(format("Final population directiory: %s", destinationPath.toString()));
             return ErrorCode.NO_ERROR;
         }
         if(newScore < initialScore) {
-            System.out.println(format("Warning population score decreased after merge:%.4f", newScore));
+            output.infoMessage(format("Warning population score decreased after merge:%.4f", newScore));
         }
         return ErrorCode.NO_OUTPUT;
     }
     
-    private static void mergeSource(Population destinationPopulation, String destination, List<RobotInfo> destinationRobots, Path sourcePath) {
+    private void mergeSource(MainSettings settings, Population destinationPopulation, String destination, List<RobotInfo> destinationRobots, Path sourcePath) {
         File sourceFile = new File(sourcePath.toString().replace("./", ""));
+        if(!sourceFile.exists()) {
+            output.errorMessage(format("Merge soruce directory %s does not exist.", sourceFile.toString()));
+            return;
+        }
         String source = sourceFile.getAbsolutePath();
         PopulationDAOFileSystem daoSource = new PopulationDAOFileSystem(source);
-        Population sourcePopulation = PopulationFactory.getDefaultPopulation(daoSource);
+        Population sourcePopulation = settings == null ? 
+                PopulationFactory.getDefaultPopulation(daoSource) : PopulationFactory.getDefaultPopulation(new PopulationSettings(settings), daoSource);
         if(sourcePopulation.getSize() < 1) {
             return;
         }
-        System.out.println(format("Source path: %s", source));
+        output.infoMessage(format("Source path: %s", source));
         List<RobotInfo> sourceRobots = sourcePopulation.getRobotInfoList();
-        sourceRobots .stream()
+        sourceRobots.stream()
             .filter(robot -> robot.getWeight() == 0.0)
             .collect(Collectors.toList())
             .forEach(robot -> sourcePopulation.removeRobot(robot.getName()));
@@ -72,14 +102,14 @@ class Merge {
                 RobotInfo worst = destinationRobots.isEmpty() ? null : destinationRobots.get(0);
                 if(moreRobotsNeeded(destinationPopulation, best, worst)) {
                     // Take robot...
-                    System.out.println(format("Adding robot %s to destination due to desination not full. Weight: %.4f new size: %d", 
+                    output.infoMessage(format("Adding robot %s to destination due to desination not full. Weight: %.4f new size: %d", 
                         best.getName(), best.getWeight(), destinationPopulation.getSize()+1));
                     if(!moveRobot(sourcePopulation, destinationPopulation, destinationRobots, best)) {
                         return;
                     }
                 } else if(betterRobotFound(destinationPopulation, best, worst)) {
-                    System.out.println(format("Adding robot %s to destination due to higher weight. Weight: %.4f population score: %.4f",
-                        best.getName(), best.getWeight(), populationScore(destinationRobots)));
+                    output.infoMessage(format("Adding robot %s to destination due to higher weight. Weight: %.4f population score: %.4f",
+                        best.getName(), best.getWeight(), Population.populationScore(destinationRobots)));
                     destinationRobots.remove(0);
                     destinationPopulation.removeRobot(worst.getName());
                     if(!moveRobot(sourcePopulation, destinationPopulation, destinationRobots, best)) {
@@ -87,7 +117,6 @@ class Merge {
                     }
                 }
             }
-            break;
         }
         try {
             Files.walk(sourceFile.toPath())
@@ -95,25 +124,21 @@ class Merge {
                 .map(Path::toFile)
                 .forEach(File::delete);
         } catch (IOException e) {
-            System.out.println(format("Exception clearing directory %s. Exception %s", sourceFile, e.toString()));
+            output.infoMessage(format("Exception clearing directory %s. Exception %s", sourceFile, e.toString()));
         }
     }
     
     private static boolean moreRobotsNeeded(Population destinationPopulation, RobotInfo best, RobotInfo worst) {
         return destinationPopulation.getSize() < destinationPopulation.getDesiredSize() 
             && best.getScore() > 0.0 
-            && best.isPredicting();
+            && best.hasPredicted();
     }
     
     private static boolean betterRobotFound(Population destinationPopulation, RobotInfo best, RobotInfo worst) {
         return worst != null 
             && best.getScore() > 0 
             && worst.getScore() < best.getScore()
-            && (best.isPredicting() || !worst.isPredicting());
-    }
-    
-    private static double populationScore(List<RobotInfo> robotInfoList) {
-        return robotInfoList.stream().mapToDouble(RobotInfo::getScore).average().orElse(0);
+            && (best.hasPredicted() || !worst.hasPredicted());
     }
     
     private static boolean moveRobot(Population sourcePopulation, Population destinationPopulation, List<RobotInfo> destinationRobots, RobotInfo robot) {
@@ -124,7 +149,7 @@ class Merge {
         sourcePopulation.removeRobot(robot.getName());
         movingRobot.setName(null);
         destinationPopulation.saveRobot(movingRobot);
-        destinationRobots.add(robot);
+        destinationRobots.add(new RobotInfo(movingRobot));
         destinationRobots.sort(Comparator.comparing(RobotInfo::getScore));
         return true;
     }

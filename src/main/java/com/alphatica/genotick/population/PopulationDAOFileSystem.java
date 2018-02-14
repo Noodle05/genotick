@@ -72,7 +72,9 @@ public class PopulationDAOFileSystem implements PopulationDAO {
 
     @Override
     public void removeRobot(RobotName robotName) {
-        names.remove(robotName);
+        if(!names.remove(robotName)) {
+            throw new DAOException("Unable to remove robot " + robotName.toString());
+        }
         deleteFile(robotName);
     }
 
@@ -85,7 +87,7 @@ public class PopulationDAOFileSystem implements PopulationDAO {
     private void deleteFile(RobotName robotName) {
         File file = createFileForName(robotName);
         boolean result = file.delete();
-        if(!result)
+        if(!result && file.exists())
             throw new DAOException("Unable to remove file " + file.getAbsolutePath());
     }
 

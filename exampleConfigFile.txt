@@ -116,9 +116,16 @@ minimumOutcomesToAllowBreeding	50
 # The number of outcomes required for a parent robot to breed another child.
 minimumOutcomesBetweenBreeding	50
 
-# If true, then robots that make no prediction will be removed immediately,
-# regardless of the protection implied by 'protectUntilOutcomes'
-killNonPredictingRobots	true
+# A setting of 0 disables killing non-predicting robots.  A higher value
+# indicates the number of time points in which a robot must have made
+# a prediction.  For example on daily SPX data a setting of 120
+# means that the robot must have made a prediction in the last 120 days.
+killNonPredictingRobots    120
+
+# Number of time points to allow a robot to train before requiring it to make
+# a first prediction.  0 is the traditional behavior.  I value of 0-4 is reasonable
+# without leaving lots of dead on birth robots in the population.
+ageBeforeKillingNonPredictingRobots 3
 
 # The number of totally new and random robots to be added at each time point (as a fraction of PopulationDesiredSize). 
 # Robots are added even if the population is full.

@@ -15,16 +15,22 @@ import static java.lang.String.format;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 
-class ConsoleOutput implements UserOutput {
+public class ConsoleOutput implements UserOutput {
 
     private final String outdir;
+    private boolean verbose;
     private String identifier;
     private File logFile;
     private final Boolean debugEnabled = false;
 
-    ConsoleOutput(String outdir) {
+    ConsoleOutput(String outdir, boolean verbose) {
         this.outdir = outdir;
+        this.verbose = verbose;
         setIdentifier(Tools.generateCommonIdentifier());
+    }
+    
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
     }
     
     private void buildFileName() {
@@ -59,7 +65,7 @@ class ConsoleOutput implements UserOutput {
 
     @Override
     public void showPrediction(TimePoint timePoint, DataSetResult result, Prediction prediction) {
-        log(format("%s prediction on %s for the next trade: %s, count up/dn: %s/%s, weight up/dn: %.2f/%.2f",
+        if(verbose) log(format("%s prediction on %s for the next trade: %s, count up/dn: %s/%s, weight up/dn: %.2f/%.2f",
                 result.getName().toString(),timePoint.toString(),prediction.toString(),
                 result.getCountUp(),result.getCountDown(),result.getWeightUp(),result.getWeightDown()
         ));
@@ -67,28 +73,28 @@ class ConsoleOutput implements UserOutput {
     
     @Override
     public void reportAccountOpening(BigDecimal balance) {
-        log(format("Opening account with %s balance", balance.toPlainString()));
+        if(verbose) log(format("Opening account with %s balance", balance.toPlainString()));
     }
 
     @Override
     public void reportPendingTrade(DataSetName name, Prediction prediction) {
-        log(format("Adding pending trade %s for market %s", prediction, name));
+        if(verbose) log(format("Adding pending trade %s for market %s", prediction, name));
     }
 
     @Override
     public void reportOpeningTrade(DataSetName name, BigDecimal quantity, Double price) {
-        log(format("Opening %s trade. Quantity: %s, price: %.4f", name, scale(quantity), price));
+        if(verbose) log(format("Opening %s trade. Quantity: %s, price: %.4f", name, scale(quantity), price));
     }
 
     @Override
     public void reportClosingTrade(DataSetName name, BigDecimal quantity, BigDecimal price, BigDecimal profit, BigDecimal balance) {
-        log(format("Closing %s trade. Quantity %s, price: %s, profit: %s, current balance: %s",
+        if(verbose) log(format("Closing %s trade. Quantity %s, price: %s, profit: %s, current balance: %s",
                 name, scale(quantity), scale(price), scale(profit), scale(balance)));
     }
 
     @Override
     public void reportAccountClosing(BigDecimal balance) {
-        log(format("Closing account with %s balance", scale(balance)));
+        if(verbose) log(format("Closing account with %s balance", scale(balance)));
     }
 
     @Override
@@ -98,12 +104,12 @@ class ConsoleOutput implements UserOutput {
 
     @Override
     public void reportStartedTimePoint(TimePoint timePoint) {
-        log(format("Starting time point %s", timePoint));
+        if(verbose) log(format("Starting time point %s", timePoint));
     }
 
     @Override
     public void reportFinishedTimePoint(TimePoint timePoint, BigDecimal equity) {
-        log(format("Finished time point %s with account value %s", timePoint, scale(equity)));
+        if(verbose) log(format("Finished time point %s with account value %s", timePoint, scale(equity)));
     }
 
     private void log(String message) {

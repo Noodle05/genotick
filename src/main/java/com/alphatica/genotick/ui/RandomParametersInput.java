@@ -27,7 +27,8 @@ class RandomParametersInput extends BasicUserInput {
             }
             defaults.populationDAO = "";
             defaults.requireSymmetricalRobots = true;
-            defaults.killNonPredictingRobots = true;
+            defaults.killNonPredictingRobots = 120;
+            defaults.ageBeforeKillingNonPredictingRobots = 3;
             defaults.performTraining = true;
             defaults.chartMode = GenoChartMode.NONE;
             MainAppData data = getData(defaults.dataDirectory);

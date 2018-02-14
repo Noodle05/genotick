@@ -66,14 +66,14 @@ public class UserInputOutputFactory {
             createDirsThrowable(outdir);
         }
         if (output == null) {
-            return new ConsoleOutput(outdir);
+            return new ConsoleOutput(outdir, true);
         }
         return createUserOutputByOption(output, outdir);
     }
 
     private static UserOutput createUserOutputByOption(String output, String outdir) throws IOException {
         switch (output) {
-            case OUTPUT_OPTION_CONSOLE: return new ConsoleOutput(outdir);
+            case OUTPUT_OPTION_CONSOLE: return new ConsoleOutput(outdir, true);
             case OUTPUT_OPTION_CSV: return new CsvOutput(outdir);
             case OUTPUT_OPTION_NONE: return new NoOutput(outdir);
         }

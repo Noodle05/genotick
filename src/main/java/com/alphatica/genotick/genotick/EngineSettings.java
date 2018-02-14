@@ -9,8 +9,10 @@ public class EngineSettings {
     public final TimePoint endTimePoint;
     public final boolean performTraining;
     public final int maximumDataOffset;
-    public final boolean killNonPredictingRobots;
+    public final int killNonPredictingRobots;
+    public final int ageBeforeKillingNonPredictingRobots;
     public final boolean requireSymmetricalRobots;
+    public final double minimumScoreToSaveToDisk;
     public final double resultThreshold;
     public final GenoChartMode chartMode;
     public final double profitReinvestFactor;
@@ -22,7 +24,9 @@ public class EngineSettings {
         this.performTraining = settings.performTraining;
         this.maximumDataOffset = settings.maximumDataOffset;
         this.killNonPredictingRobots = settings.killNonPredictingRobots;
+        this.ageBeforeKillingNonPredictingRobots = settings.ageBeforeKillingNonPredictingRobots;
         this.requireSymmetricalRobots = settings.requireSymmetricalRobots;
+        this.minimumScoreToSaveToDisk = settings.minimumScoreToSaveToDisk;
         this.resultThreshold = settings.resultThreshold;
         this.chartMode = settings.chartMode;
         this.profitReinvestFactor = settings.profitReinvestFactor;

@@ -117,8 +117,8 @@ public class SimplePopulation implements Population {
         fs.removeAllRobots();
         AtomicInteger savedCount = new AtomicInteger(0);
         dao.getRobots().forEach((robot) -> {
-            if((settings.killNonPredictingRobots == false || robot.isPredicting()) &&
-                Math.abs(robot.getWeight()) >= settings.minimumScoreToSaveToDisk) {
+            if((settings.killNonPredictingRobots == 0 || robot.hasPredicted()) &&
+                robot.getScore() >= settings.minimumScoreToSaveToDisk) {
                 fs.saveRobot(robot);
                 savedCount.incrementAndGet();
             }

@@ -49,7 +49,7 @@ public class TimePointResult {
         if (settings.requireSymmetricalRobots && robot.getBias() != 0) {
             return false;
         }
-        if (settings.killNonPredictingRobots && !robot.isPredicting()) {
+        if (settings.killNonPredictingRobots > 0 && robot.getAge() > settings.ageBeforeKillingNonPredictingRobots && !robot.isPredicting(settings.killNonPredictingRobots)) {
             return false;
         }
         return true;
