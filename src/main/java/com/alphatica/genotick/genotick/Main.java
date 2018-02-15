@@ -283,12 +283,12 @@ public class Main {
         int simulationIteration = 0;
         int simulationIterationWithRobotsProduced=0;
         int iterationsWithImprovements = 0;
-        int iterations = requestedIterations;
+        int iterations = requestedIterations + 1;
         boolean isTransistionFromBuildingToImproving = false;
         while (true) {
             // Check exit conditions.
             if(--iterations == 0) {
-                output.infoMessage("Iterative training ending due to no progress improving population");
+                if(automaticIterations == true) output.infoMessage("Iterative training ending due to no progress improving population");
                 break;
             }
             if(--maximumIterations == 0) {
