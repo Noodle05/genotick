@@ -10,6 +10,7 @@ import com.alphatica.genotick.data.MainAppData;
 import com.alphatica.genotick.data.YahooFixer;
 import com.alphatica.genotick.reversal.Reversal;
 import com.alphatica.genotick.timepoint.TimePoint;
+import com.alphatica.genotick.timepoint.TimePoints;
 import com.alphatica.genotick.ui.ConsoleOutput;
 import com.alphatica.genotick.ui.Parameters;
 import com.alphatica.genotick.ui.UserInput;
@@ -98,11 +99,12 @@ public class Main {
             System.out.print("Reversing data: ");
             System.out.println("    java -jar genotick.jar reverse=MY_DATA_DIR");
             System.out.print("Inputs from a file: ");
-            System.out.println("    java -jar genotick.jar input=file:MY_CONFIG_FILE iterations=X|auto:X (optional) maxIterations=Y (optional) maxTime=Z (seconds optional");
+            System.out.println("    java -jar genotick.jar input=file:MY_CONFIG_FILE iterations=X|auto:X (optional) maxIterations=Y (optional) maxTime=Z (seconds optional trainingEndTime=A (optional");
             System.out.println("        iterations=X repeats training X times.  Outputs into seperate directories");
             System.out.println("        iterations=auto:X repeats training while population improves with up to X retries,  Merges outputs into one directory");
             System.out.println("        maxIterations=Y limits iterative training to Y total attempts");
             System.out.println("        maxTime=Z limits iterative training to Z seconds");
+            System.out.println("        trainingEndTime=A limits training to end at A.  A can be a time point or if a negative value will stop at that many time points from then end. E.g. -30 to stop 30 time points back");
             System.out.print("Output to a file: ");
             System.out.println("    java -jar genotick.jar output=csv");
             System.out.print("Custom output directory for generated files (log, charts, population): ");
@@ -260,7 +262,8 @@ public class Main {
         long trainingEndTimePoint = Long.MIN_VALUE;
         String trainingTimePoint = parameters.getAndRemoveValue("trainingEndTime");
         if (trainingTimePoint != null && !trainingTimePoint.isEmpty()) {
-            trainingEndTimePoint = Math.max(1, Long.parseLong(trainingTimePoint));
+            long newTrainingTimePoint = Long.parseLong(trainingTimePoint);
+            if (newTrainingTimePoint != 0) trainingEndTimePoint = newTrainingTimePoint;
         }
         if(!parameters.allConsumed()) {
             output.errorMessage("Not all arguments processed: " + parameters.getUnconsumed());
@@ -276,7 +279,16 @@ public class Main {
         Double originalMinimumScoreToSaveToDisk = settings.minimumScoreToSaveToDisk;
         if(automaticIterations == true) {
             if(settings.minimumScoreToSaveToDisk == 0.0) settings.minimumScoreToSaveToDisk = 0.01;
-            if(trainingEndTimePoint != Long.MIN_VALUE) settings.endTimePoint = new TimePoint(trainingEndTimePoint);
+            if(trainingEndTimePoint != Long.MIN_VALUE) {
+                if(trainingEndTimePoint > 0) {
+                    settings.endTimePoint = data.getTimePoint(data.getNearestBar(new TimePoint(trainingEndTimePoint)));
+                } else if(trainingEndTimePoint == 0 || Math.abs(trainingEndTimePoint) > data.getTimePointCount()) {
+                    output.errorMessage(String.format("Invalid ending time point %d specified, ignoring", trainingEndTimePoint));
+                } else {
+                    TimePoints timePoints = data.createTimePointsCopy(data.getFirstTimePoint(),  data.getLastTimePoint());
+                    settings.endTimePoint = timePoints.get(timePoints.size() + (int)trainingEndTimePoint);
+                }
+            }
         }
         
         int totalActiveRobotCount = 0;
@@ -336,12 +348,12 @@ public class Main {
                             engineResult.getPopulationScore(),
                             totalActiveRobotCount));
 
-                    if(simulationIterationWithRobotsProduced == 1 || engineResult.getActivePopulationSize() == 0) {
+                    if(simulationIterationWithRobotsProduced == 1 || engineResult.getActivePopulationSize() < settings.populationDesiredSize * 0.10) {
                         // Update the difficulty to the average of the runs overall if no progress is being made.
                         settings.minimumScoreToSaveToDisk = Math.max(0.1, calculateAverageEngineResultScore(engineResults, 0.1) );
                     } else if (engineResult.getActivePopulationSize() > 0){
-                        // Add at least a nominal 10% increase to each additional run or the higher mid average of the runs.
-                        settings.minimumScoreToSaveToDisk = Math.max(settings.minimumScoreToSaveToDisk * 1.10, calculateAverageEngineResultScore(engineResults, settings.minimumScoreToSaveToDisk / 2));
+                        // Add at least a nominal 5% increase to each additional run or the higher mid average of the runs.
+                        settings.minimumScoreToSaveToDisk = Math.max(settings.minimumScoreToSaveToDisk * 1.05, calculateAverageEngineResultScore(engineResults, settings.minimumScoreToSaveToDisk / 2));
                     }
                     
                     if(engineResult.getActivePopulationSize() > 0) {

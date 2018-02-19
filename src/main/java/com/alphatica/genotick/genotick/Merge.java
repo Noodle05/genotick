@@ -102,14 +102,14 @@ class Merge {
                 RobotInfo worst = destinationRobots.isEmpty() ? null : destinationRobots.get(0);
                 if(moreRobotsNeeded(destinationPopulation, best, worst)) {
                     // Take robot...
-                    output.infoMessage(format("Adding robot %s to destination due to desination not full. Weight: %.4f new size: %d", 
-                        best.getName(), best.getWeight(), destinationPopulation.getSize()+1));
+                    output.infoMessage(format("Adding robot %s to destination due to desination not full. Score: %.4f new size: %d", 
+                        best.getName(), best.getScore(), destinationPopulation.getSize()+1));
                     if(!moveRobot(sourcePopulation, destinationPopulation, destinationRobots, best)) {
                         return;
                     }
                 } else if(betterRobotFound(destinationPopulation, best, worst)) {
-                    output.infoMessage(format("Adding robot %s to destination due to higher weight. Weight: %.4f population score: %.4f",
-                        best.getName(), best.getWeight(), Population.populationScore(destinationRobots)));
+                    output.infoMessage(format("Adding robot %s to destination due to higher score. Score: %.4f population score: %.4f",
+                        best.getName(), best.getScore(), Population.populationScore(destinationRobots)));
                     destinationRobots.remove(0);
                     destinationPopulation.removeRobot(worst.getName());
                     if(!moveRobot(sourcePopulation, destinationPopulation, destinationRobots, best)) {
