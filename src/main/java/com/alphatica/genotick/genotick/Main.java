@@ -303,7 +303,7 @@ public class Main {
                 if(automaticIterations == true) output.infoMessage("Iterative training ending due to no progress improving population");
                 break;
             }
-            if(--maximumIterations == 0) {
+            if(--maximumIterations < 0) {
                 output.infoMessage("Iterative training ending due to maximum iterations reached");
                 break;
             }
@@ -399,7 +399,8 @@ public class Main {
         output.infoMessage(String.format("Final populations average score: %f. Total iterations: %d", calculateAverageEngineResultScore(engineResults, Double.MIN_VALUE), simulationIteration));
         
         if(automaticIterations) {
-            if(autoMergePopulations(settings, engineResults) != ErrorCode.NO_ERROR) {
+            ErrorCode mergeResult = autoMergePopulations(settings, engineResults);
+            if(mergeResult != ErrorCode.NO_ERROR && mergeResult != ErrorCode.NO_OUTPUT) {
                 return;
             }
             
@@ -409,7 +410,7 @@ public class Main {
             
             if(trainingEndTimePoint != Long.MIN_VALUE && trainingEndTimePoint < originalEndTimePoint.getValue()) {
                 output.infoMessage(String.format("Automatic iterations running final population against remaining data"));
-                settings.startTimePoint = new TimePoint(trainingEndTimePoint+1);
+                settings.startTimePoint = new TimePoint(settings.endTimePoint.getValue()+1);
                 settings.endTimePoint = originalEndTimePoint;
                 settings.minimumScoreToSaveToDisk = originalMinimumScoreToSaveToDisk;
                 //settings.performTraining = false;
