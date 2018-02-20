@@ -171,7 +171,7 @@ public class Main {
         String path = parameters.getValue("showPopulation");
         if(path != null) {
             try {
-                PopulationPrinter.printPopulation(path);
+                PopulationPrinter.printPopulation(path, false);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
                 System.err.println(e.getMessage());
@@ -407,13 +407,15 @@ public class Main {
             if(output instanceof ConsoleOutput) {
                 ((ConsoleOutput)output).setVerbose(true);
             }
+
+            PopulationPrinter.printPopulation(engineResults.get(0).getPopulationDirectory(), true);
             
             if(trainingEndTimePoint != Long.MIN_VALUE && trainingEndTimePoint < originalEndTimePoint.getValue()) {
                 output.infoMessage(String.format("Automatic iterations running final population against remaining data"));
                 settings.startTimePoint = new TimePoint(settings.endTimePoint.getValue()+1);
                 settings.endTimePoint = originalEndTimePoint;
                 settings.minimumScoreToSaveToDisk = originalMinimumScoreToSaveToDisk;
-                //settings.performTraining = false;
+                settings.performTraining = false;
                 settings.populationDAO = "ram:" + engineResults.get(0).getPopulationDirectory();
                 Simulation simulation = new Simulation(output);
                 MainInterface.SessionResult sessionResult = (session != null) ? session.result : null;
@@ -424,6 +426,7 @@ public class Main {
                 }
                 engineResults.add(engineResult);
             }
+            
         }
         setError(ErrorCode.NO_ERROR);
     }

@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public class RobotInfo {
     public static final Comparator<RobotInfo> comparatorByAge = new AgeComparator();
-    public static final Comparator<RobotInfo> comparatorByAbsoluteWeight = new AbsoluteWeightComparator();
+    public static final Comparator<RobotInfo> comparatorByAbsoluteScore = new AbsoluteWeightComparator();
     private static final DecimalFormat format = new DecimalFormat("0.00");
     private final RobotName name;
     private final double weight;

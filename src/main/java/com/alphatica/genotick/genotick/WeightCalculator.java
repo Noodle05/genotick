@@ -28,10 +28,9 @@ public class WeightCalculator implements Serializable {
             case PROFIT_COUNT: weight = getProfitCount(robot); break;
             case PROFIT_FACTOR: weight = getProfitFactor(robot); break;
         }
-        if (weight >= 0.0) {
+        if (weight > 0.0) {
             weight = Math.pow(weight, this.exponent);
-        }
-        else {
+        } else if (weight < 0.0) {
             weight = -Math.pow(-weight, this.exponent);
         }
         gassert(!weight.isNaN());

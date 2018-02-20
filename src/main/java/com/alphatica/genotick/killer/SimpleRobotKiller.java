@@ -30,6 +30,7 @@ class SimpleRobotKiller implements RobotKiller {
 
     @Override
     public void killRobots(Population population, List<RobotInfo> robotInfos) {
+        robotInfos.sort(RobotInfo.comparatorByAbsoluteScore);
         int before = population.getSize(), after;
         killNonPredictingRobots(population, robotInfos);
         after = population.getSize();
@@ -103,7 +104,6 @@ class SimpleRobotKiller implements RobotKiller {
 
     private void protectBest(Population population, List<RobotInfo> robotInfos) {
         if(settings.protectBestRobots > 0) {
-            robotInfos.sort(RobotInfo.comparatorByAbsoluteWeight);
             int i = (int)Math.round(settings.protectBestRobots * population.getDesiredSize());
             while(i-- > 0) {
                 RobotInfo robotInfo = getLastFromList(robotInfos);
@@ -128,7 +128,7 @@ class SimpleRobotKiller implements RobotKiller {
     }
 
     private void killRobotsByWeight(Population population, List<RobotInfo> listCopy, List<RobotInfo> originalList) {
-        listCopy.sort(RobotInfo.comparatorByAbsoluteWeight);
+        listCopy.sort(RobotInfo.comparatorByAbsoluteScore);
         Collections.reverse(listCopy);
         int numberToKill = (int) Math.round(settings.maximumDeathByWeight * originalList.size());
         killRobots(listCopy,originalList,numberToKill,population,settings.probabilityOfDeathByWeight);

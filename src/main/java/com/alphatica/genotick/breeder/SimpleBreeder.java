@@ -16,6 +16,7 @@ import com.alphatica.genotick.ui.UserOutput;
 import com.alphatica.genotick.utility.ParallelTasks;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -117,9 +118,11 @@ public class SimpleBreeder implements RobotBreeder {
     }
 
     private void breedPopulationFromList(Population population, List<RobotInfo> list) {
+        list.sort(Comparator.comparing(RobotInfo::getScore));
         while (population.hasSpaceToBreed()) {
-            Robot parent1 = getPossibleParent(population, list);
-            Robot parent2 = getPossibleParent(population, list);
+            boolean direction = random.nextBoolean();
+            Robot parent1 = getPossibleParent(population, list, direction);
+            Robot parent2 = getPossibleParent(population, list, direction);
             if (parent1 == null || parent2 == null)
                 break;
             RobotSettings robotSettings = new RobotSettings(settings, weightCalculator);
@@ -230,15 +233,18 @@ public class SimpleBreeder implements RobotBreeder {
         }
     }
 
-    private Robot getPossibleParent(Population population, List<RobotInfo> list) {
-        double totalWeight = sumTotalWeight(list);
-        double target = Math.abs(totalWeight * mutator.getNextDouble());
-        double weightSoFar = 0;
+    private Robot getPossibleParent(Population population, List<RobotInfo> list, boolean direction) {
+        double totalWeight = sumTotalScore(list, direction);
+        double target = totalWeight * mutator.getNextDouble();
+        double scoreSoFar = 0;
         Iterator<RobotInfo> iterator = list.iterator();
         while (iterator.hasNext()) {
             RobotInfo robotInfo = iterator.next();
-            weightSoFar += Math.abs(robotInfo.getWeight());
-            if (weightSoFar >= target) {
+            if((direction == true && robotInfo.getWeight() < 0.0) || (direction == false && robotInfo.getWeight() >= 0.0)) {
+                continue;
+            }
+            scoreSoFar += robotInfo.getScore();
+            if (scoreSoFar >= target) {
                 iterator.remove();
                 return population.getRobot(robotInfo.getName());
             }
@@ -246,12 +252,14 @@ public class SimpleBreeder implements RobotBreeder {
         return null;
     }
 
-    private double sumTotalWeight(List<RobotInfo> list) {
-        double weight = 0;
+    private double sumTotalScore(List<RobotInfo> list, boolean direction) {
+        double score = 0;
         for (RobotInfo robotInfo : list) {
-            weight += Math.abs(robotInfo.getWeight());
+            if((direction == true && robotInfo.getWeight() >= 0.0) || (direction == false && robotInfo.getWeight() < 0.0)) {
+                score += robotInfo.getScore();
+            }
         }
-        return weight;
+        return score;
     }
 
     @Override
