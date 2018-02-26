@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.alphatica.genotick.population.Population;
-import com.alphatica.genotick.population.Robot;
 import com.alphatica.genotick.population.RobotInfo;
 
 public class EngineResult {

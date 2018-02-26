@@ -57,4 +57,13 @@ public class ColumnAccess implements Serializable {
     public boolean isAllowedColumn(int column) {
         return allowedColumns.get(ignoreColumns + (int)Math.abs(column % (allowedColumns.length() - ignoreColumns)));     
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ignoreColumns);
+        sb.append(':');
+        sb.append(allowedColumns.toString());
+        return sb.toString();
+    }
 }

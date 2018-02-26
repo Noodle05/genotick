@@ -1,6 +1,8 @@
 package com.alphatica.genotick.population;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import com.alphatica.genotick.breeder.BreederSettings;
 import com.alphatica.genotick.genotick.WeightCalculator;
@@ -23,5 +25,26 @@ public class RobotSettings implements Serializable {
         this.ignoreColumns = settings.ignoreColumns;
         this.columnCount = settings.columnCount;
         this.weightCalculator = weightCalculator;
+    }
+    
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        Field [] fields = getClass().getDeclaredFields();
+        for(Field field: fields) {
+            field.setAccessible(true);
+            if(!Modifier.isStatic(field.getModifiers())) {
+                try {
+                    Object object = field.get(this);
+                    if(sb.length() > 0) {
+                        sb.append(",");
+                    }
+                    sb.append(object.toString());
+                } catch(IllegalAccessException ex) {
+                    ;
+                }
+            }
+        }
+        return sb.toString();
     }
 }

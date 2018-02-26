@@ -62,4 +62,13 @@ public class WeightCalculator implements Serializable {
         }
         return 0.0;
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(mode.toString());
+        sb.append(':');
+        sb.append(exponent);
+        return sb.toString();
+    }
 }

@@ -190,6 +190,9 @@ public class Robot implements Serializable {
     public String showRobot() throws IllegalAccessException {
         StringBuilder sb = new StringBuilder();
         addFields(sb);
+        sb.append("Weight ");
+        sb.append(getWeight());
+        sb.append("\n");
         addMainFunction(sb);
         return sb.toString();
     }

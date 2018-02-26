@@ -171,7 +171,7 @@ public class Main {
         String path = parameters.getValue("showPopulation");
         if(path != null) {
             try {
-                PopulationPrinter.printPopulation(path, false);
+                PopulationPrinter.printPopulation(path, false, false);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
                 System.err.println(e.getMessage());
@@ -408,7 +408,7 @@ public class Main {
                 ((ConsoleOutput)output).setVerbose(true);
             }
 
-            PopulationPrinter.printPopulation(engineResults.get(0).getPopulationDirectory(), true);
+            PopulationPrinter.printPopulation(engineResults.get(0).getPopulationDirectory(), true, true);
             
             if(trainingEndTimePoint != Long.MIN_VALUE && trainingEndTimePoint < originalEndTimePoint.getValue()) {
                 output.infoMessage(String.format("Automatic iterations running final population against remaining data"));

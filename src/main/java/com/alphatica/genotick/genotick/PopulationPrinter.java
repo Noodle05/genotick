@@ -7,23 +7,25 @@ import java.util.List;
 
 import com.alphatica.genotick.population.Population;
 import com.alphatica.genotick.population.PopulationDAOFileSystem;
+import com.alphatica.genotick.population.Robot;
 import com.alphatica.genotick.population.RobotInfo;
 
 class PopulationPrinter
 {
-    public static void printPopulation(String path, boolean printStatistics) throws IllegalAccessException {
+    public static void printPopulation(String path, boolean printStatistics, boolean showRobots) throws IllegalAccessException {
         PopulationDAOFileSystem dao = new PopulationDAOFileSystem(path);
         Population population = PopulationFactory.getDefaultPopulation(dao);
         showHeader();
-        showRobots(population, printStatistics);
+        showRobots(population, printStatistics, showRobots);
     }
 
-    private static void showRobots(Population population, boolean printStatistics) throws IllegalAccessException {
+    private static void showRobots(Population population, boolean printStatistics, boolean showRobots) throws IllegalAccessException {
         int countPositiveWeight = 0;
         double positiveWeight = 0.0;
         int countNegativeWeight = 0;
         double negativeWeight = 0.0;
-        for(RobotInfo robotInfo: population.getRobotInfoList()) {
+        List<RobotInfo> robotInfoList = population.getRobotInfoList();
+        for(RobotInfo robotInfo: robotInfoList) {
             String info = getRobotInfoString(robotInfo);
             System.out.println(info);
             if(robotInfo.getWeight() >= 0.0) {
@@ -41,6 +43,14 @@ class PopulationPrinter
                     countPositiveWeight, positiveWeight / Math.max(1, countPositiveWeight), 
                     countNegativeWeight, negativeWeight / Math.max(1, countNegativeWeight)
             ));
+        }
+        
+        if(showRobots) {
+            for(RobotInfo robotInfo: robotInfoList) {
+                Robot robot = population.getRobot(robotInfo.getName());
+                System.out.println(String.format("Showing robot %s", robotInfo.getName()));
+                System.out.println(robot.showRobot());
+            }
         }
     }
 
