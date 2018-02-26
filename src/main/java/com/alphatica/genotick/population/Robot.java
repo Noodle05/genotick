@@ -133,11 +133,12 @@ public class Robot implements Serializable {
             final double priceChange = robotData.getLastTrainingPriceChange();
             final Outcome outcome = Outcome.getOutcome(prediction, priceChange);
             totalOutcomes++;
-            if (outcome == Outcome.CORRECT) {
+            double weight = getWeight();
+            if ((weight >= 0.0 && outcome == Outcome.CORRECT) || (weight < 0.0 && outcome == Outcome.INCORRECT)) {
                 profitablePriceMove += Math.abs(priceChange);
                 correctPredictions++;
             }
-            else if (outcome == Outcome.INCORRECT) {
+            else if ((weight >= 0.0 && outcome == Outcome.INCORRECT) || (weight < 0.0 && outcome == Outcome.CORRECT)) {
                 unprofitablePriceMove += Math.abs(priceChange);
                 incorrectPredictions++;
             }
