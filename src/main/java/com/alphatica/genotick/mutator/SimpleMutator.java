@@ -4,6 +4,7 @@ import com.alphatica.genotick.genotick.RandomGenerator;
 import com.alphatica.genotick.instructions.Instruction;
 import com.alphatica.genotick.processor.Processor;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +52,8 @@ class SimpleMutator implements Mutator {
 
     private Instruction createNewInstruction(int index) {
         try {
-            return (Instruction) instructionList.get(index).newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            return (Instruction) instructionList.get(index).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }
