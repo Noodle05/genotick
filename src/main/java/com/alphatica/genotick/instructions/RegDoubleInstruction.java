@@ -8,6 +8,16 @@ abstract class RegDoubleInstruction extends RegInstruction {
 
     private double doubleArgument;
 
+    protected RegDoubleInstruction(RegDoubleInstruction i) {
+        super(i);
+        this.doubleArgument = i.doubleArgument;
+    }
+    
+    @SuppressWarnings("unused")
+    protected RegDoubleInstruction() {
+        super();
+    }
+    
     void setDoubleArgument(double doubleArgument) {
         this.doubleArgument = doubleArgument;
     }
@@ -23,5 +33,10 @@ abstract class RegDoubleInstruction extends RegInstruction {
             doubleArgument = Tools.mutateDouble(1_000_000 * mutator.getNextDouble(), mutator);
         }
         doubleArgument = Tools.mutateDouble(doubleArgument, mutator);    
+    }
+    
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
     }
 }

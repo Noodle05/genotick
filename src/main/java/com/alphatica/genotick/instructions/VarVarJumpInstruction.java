@@ -8,9 +8,16 @@ abstract class VarVarJumpInstruction extends VarVarInstruction implements JumpIn
 
     private int address;
 
-    VarVarJumpInstruction() {
+    protected VarVarJumpInstruction(VarVarJumpInstruction i) {
+        super(i);
+        this.address = i.address;
+    }
+
+    protected VarVarJumpInstruction() {
+        super();
         address = 0;
     }
+    
     @Override
     public int getAddress() {
         return address;

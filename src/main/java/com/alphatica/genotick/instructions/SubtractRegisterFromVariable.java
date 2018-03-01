@@ -7,8 +7,7 @@ public class SubtractRegisterFromVariable extends RegVarInstruction {
     private static final long serialVersionUID = -2540080410599300603L;
 
     private SubtractRegisterFromVariable(SubtractRegisterFromVariable i) {
-        this.setRegister(i.getRegister());
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

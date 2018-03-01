@@ -8,8 +8,7 @@ public class MoveDoubleToVariable extends VarDoubleInstruction {
     private static final long serialVersionUID = -1120463586513743256L;
 
     private MoveDoubleToVariable(MoveDoubleToVariable i) {
-        this.setVariableArgument(i.getVariableArgument());
-        this.setDoubleArgument(i.getDoubleArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

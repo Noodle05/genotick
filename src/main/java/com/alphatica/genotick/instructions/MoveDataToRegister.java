@@ -7,9 +7,7 @@ public class MoveDataToRegister extends DataRegInstruction {
     private static final long serialVersionUID = 6441937261061215492L;
 
     private MoveDataToRegister(MoveDataToRegister i) {
-        this.setDataOffsetIndex(i.getDataOffsetIndex());
-        this.setDataTableIndex(i.getDataColumnIndex());
-        this.setRegister(i.getRegister());
+        super(i);
     }
 
     @SuppressWarnings("unused")
@@ -25,5 +23,4 @@ public class MoveDataToRegister extends DataRegInstruction {
     public MoveDataToRegister copy() {
         return new MoveDataToRegister(this);
     }
-
 }

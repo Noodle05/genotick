@@ -7,14 +7,12 @@ public class HighestOfColumn extends RegRegInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -7922049215420858405L;
 
-    @SuppressWarnings("unused")
-    public HighestOfColumn() {
-
+    private HighestOfColumn(HighestOfColumn i) {
+        super(i);
     }
 
-    private HighestOfColumn(HighestOfColumn highestOfColumn) {
-        this.setRegister1(highestOfColumn.getRegister1());
-        this.setRegister2(highestOfColumn.getRegister2());
+    @SuppressWarnings("unused")
+    public HighestOfColumn() {
     }
 
     @Override

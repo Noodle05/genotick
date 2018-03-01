@@ -7,9 +7,7 @@ public class JumpIfVariableGreaterThanRegister extends RegVarJumpInstruction {
     private static final long serialVersionUID = 5018149141040073118L;
 
     private JumpIfVariableGreaterThanRegister(JumpIfVariableGreaterThanRegister i) {
-        this.setRegister(i.getRegister());
-        this.setVariableArgument(i.getVariableArgument());
-        this.setAddress(i.getAddress());
+        super(i);
     }
 
     @SuppressWarnings("unused")

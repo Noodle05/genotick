@@ -8,6 +8,15 @@ abstract public class DataInstruction extends Instruction {
     private int dataTableIndex;
     private int dataOffsetIndex;
 
+    protected DataInstruction(DataInstruction i) {
+        this.dataTableIndex = i.dataTableIndex;
+        this.dataOffsetIndex = i.dataOffsetIndex;
+    }
+    
+    @SuppressWarnings("unused")
+    public DataInstruction() {
+    }
+
     void setDataTableIndex(int dataTableIndex) {
         this.dataTableIndex = dataTableIndex;
     }

@@ -639,14 +639,14 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(SumOfColumn ins) {
         int column = fixColumn(ins.getRegister1());
-        int length = fixOffset(registers[ins.getRegister2()]);
+        int length = fixLength(registers[ins.getRegister2()]);
         registers[0] = getSum(column,length);
     }
 
     @Override
     public void execute(AverageOfColumn ins) {
         int column = fixColumn(ins.getRegister1());
-        int length = fixOffset(registers[ins.getRegister2()]);
+        int length = fixLength(registers[ins.getRegister2()]);
         double sum = getSum(column, length);
         registers[0] = sum / length;
     }
@@ -664,7 +664,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(PercentileOfColumn ins) {
         int column = fixColumn(ins.getRegister1());
-        int length = fixOffset(registers[ins.getRegister2()]);
+        int length = fixLength(registers[ins.getRegister2()]);
         if(length == 0) {
             return;
         }
@@ -792,7 +792,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(HighestOfColumn ins) {
         int column = fixColumn(ins.getRegister1());
-        int length = fixOffset(registers[ins.getRegister2()]);
+        int length = fixLength(registers[ins.getRegister2()]);
         if(!columnAccess.setAccessedColumn(column)) throw new NotEnoughDataException();
         double highest = data.getTrainingPriceData(column,0);
         for(int i = 1; i < length; i++) {
@@ -807,7 +807,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(LowestOfColumn ins) {
         int column = fixColumn(ins.getRegister1());
-        int length = fixOffset(registers[ins.getRegister2()]);
+        int length = fixLength(registers[ins.getRegister2()]);
         if(!columnAccess.setAccessedColumn(column)) throw new NotEnoughDataException();
         double lowest = data.getTrainingPriceData(column,0);
         for(int i = 1; i < length; i++) {
@@ -827,6 +827,11 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     private int fixOffset(double value) {
         return (int)Math.abs(value % maximumDataOffset);
     }
+    
+    private int fixLength(double value) {
+        return Math.max(1, fixOffset(value));
+    }
+    
     private int fixColumn(double value) {
         return ignoreColumns + (int)Math.abs(value % (dataColumns - ignoreColumns));
     }

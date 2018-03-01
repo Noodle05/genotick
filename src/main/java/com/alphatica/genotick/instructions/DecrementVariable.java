@@ -8,7 +8,7 @@ public class DecrementVariable extends VarInstruction {
     private static final long serialVersionUID = -3260981819622564798L;
 
     private DecrementVariable(DecrementVariable i) {
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

@@ -7,7 +7,7 @@ public class ZeroOutVariable extends VarInstruction {
     private static final long serialVersionUID = -7513892893024990050L;
 
     private ZeroOutVariable(ZeroOutVariable i) {
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

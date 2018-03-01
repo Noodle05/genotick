@@ -8,9 +8,15 @@ abstract class RegDoubleJumpInstruction extends RegDoubleInstruction implements 
 
     private int address;
 
-    RegDoubleJumpInstruction() {
+    protected RegDoubleJumpInstruction(RegDoubleJumpInstruction i) {
+        super(i);
+        this.address = i.address;
+    }
+    protected RegDoubleJumpInstruction() {
+        super();
         address = 0;
     }
+    
     @Override
     public int getAddress() {
         return address;

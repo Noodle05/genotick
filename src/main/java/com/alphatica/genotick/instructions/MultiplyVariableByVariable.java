@@ -7,8 +7,7 @@ public class MultiplyVariableByVariable extends VarVarInstruction {
     private static final long serialVersionUID = -2530246252784080647L;
 
     private MultiplyVariableByVariable(MultiplyVariableByVariable i) {
-        this.setVariable1Argument(i.getVariable1Argument());
-        this.setVariable2Argument(i.getVariable2Argument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

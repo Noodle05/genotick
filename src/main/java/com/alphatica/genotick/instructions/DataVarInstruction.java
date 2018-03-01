@@ -8,6 +8,14 @@ abstract class DataVarInstruction extends DataInstruction {
 
     private int variableArgument;
 
+    protected DataVarInstruction(DataVarInstruction i) {
+        this.variableArgument = i.variableArgument;
+    }
+    
+    @SuppressWarnings("unused")
+    public DataVarInstruction() {
+    }
+
     void setVariableArgument(int variableArgument) {
         this.variableArgument = variableArgument;
     }
@@ -21,4 +29,8 @@ abstract class DataVarInstruction extends DataInstruction {
         variableArgument = mutator.getNextInt();
     }
 
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
+    }
 }

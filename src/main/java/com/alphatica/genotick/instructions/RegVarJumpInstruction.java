@@ -8,7 +8,13 @@ abstract class RegVarJumpInstruction extends RegVarInstruction implements JumpIn
 
     private int address;
 
-    RegVarJumpInstruction() {
+    protected RegVarJumpInstruction(RegVarJumpInstruction i) {
+        super(i);
+        this.address = i.address;
+    }
+
+    protected RegVarJumpInstruction() {
+        super();
         address = 0;
     }
 

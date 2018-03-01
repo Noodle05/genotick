@@ -7,8 +7,7 @@ public class SubtractDoubleFromRegister extends RegDoubleInstruction {
     private static final long serialVersionUID = 8867925324160720308L;
 
     private SubtractDoubleFromRegister(SubtractDoubleFromRegister i) {
-        this.setRegister(i.getRegister());
-        this.setDoubleArgument(i.getDoubleArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

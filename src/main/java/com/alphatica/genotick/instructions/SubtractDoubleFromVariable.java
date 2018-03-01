@@ -7,8 +7,7 @@ public class SubtractDoubleFromVariable extends VarDoubleInstruction {
     private static final long serialVersionUID = 8293191797685003121L;
 
     private SubtractDoubleFromVariable(SubtractDoubleFromVariable i) {
-        this.setVariableArgument(i.getVariableArgument());
-        this.setDoubleArgument(i.getDoubleArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

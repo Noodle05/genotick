@@ -8,8 +8,7 @@ public class MoveDoubleToRegister extends RegDoubleInstruction {
     private static final long serialVersionUID = -8885197267150260362L;
 
     private MoveDoubleToRegister(MoveDoubleToRegister i) {
-        this.setRegister(i.getRegister());
-        this.setDoubleArgument(i.getDoubleArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

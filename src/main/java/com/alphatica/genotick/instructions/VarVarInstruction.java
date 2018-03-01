@@ -9,6 +9,15 @@ abstract class VarVarInstruction extends Instruction {
     private int variable1Argument;
     private int variable2Argument;
 
+    protected VarVarInstruction(VarVarInstruction i) {
+        this.variable1Argument = i.variable1Argument;
+        this.variable2Argument = i .variable2Argument;
+    }
+    
+    @SuppressWarnings("unused")
+    public VarVarInstruction() {
+    }
+
     public int getVariable1Argument() {
         return variable1Argument;
     }
@@ -29,5 +38,10 @@ abstract class VarVarInstruction extends Instruction {
     public void mutate(Mutator mutator) {
         variable1Argument = mutator.getNextInt();
         variable2Argument = mutator.getNextInt();
+    }
+
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
     }
 }

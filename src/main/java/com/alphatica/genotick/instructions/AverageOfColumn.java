@@ -7,13 +7,12 @@ public class AverageOfColumn extends RegRegInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -329518949586814597L;
 
-    @SuppressWarnings("unused")
-    public AverageOfColumn() {
+    private AverageOfColumn(AverageOfColumn i) {
+        super(i);
     }
 
-    private AverageOfColumn(AverageOfColumn averageOfColumn) {
-        this.setRegister1(averageOfColumn.getRegister1());
-        this.setRegister2(averageOfColumn.getRegister2());
+    @SuppressWarnings("unused")
+    public AverageOfColumn() {
     }
 
     @Override
@@ -24,5 +23,10 @@ public class AverageOfColumn extends RegRegInstruction {
     @Override
     public Instruction copy() {
         return new AverageOfColumn(this);
+    }
+    
+    @Override 
+    public double getPrevalence(InstructionList il) {
+        return getDecayingPrevalence(il, this.getClass(), 1.0);
     }
 }

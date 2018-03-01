@@ -8,6 +8,16 @@ abstract class RegVarInstruction extends RegInstruction {
 
     private int variableArgument;
 
+    protected RegVarInstruction(RegVarInstruction i) {
+        super(i);
+        this.variableArgument = i.variableArgument;
+    }
+    
+    @SuppressWarnings("unused")
+    public RegVarInstruction() {
+        super();
+    }
+
     void setVariableArgument(int variable) {
         this.variableArgument = variable;
     }
@@ -16,10 +26,14 @@ abstract class RegVarInstruction extends RegInstruction {
         return variableArgument;
     }
 
-
     @Override
     public void mutate(Mutator mutator) {
         super.mutate(mutator);
         variableArgument = mutator.getNextInt();
+    }
+
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
     }
 }

@@ -7,7 +7,7 @@ public class IncrementVariable extends VarInstruction {
     private static final long serialVersionUID = -7224362880966273739L;
 
     private IncrementVariable(IncrementVariable i) {
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

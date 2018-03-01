@@ -7,8 +7,7 @@ public class MoveVariableToVariable extends VarVarInstruction {
     private static final long serialVersionUID = -8962949754876920077L;
 
     private MoveVariableToVariable(MoveVariableToVariable i) {
-        this.setVariable1Argument(i.getVariable1Argument());
-        this.setVariable2Argument(i.getVariable2Argument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

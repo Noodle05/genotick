@@ -15,7 +15,6 @@ public class TerminateInstructionList extends Instruction {
         processor.execute(this);
     }
 
-
     @Override
     public void mutate(Mutator mutator) {
         /*
@@ -26,5 +25,10 @@ public class TerminateInstructionList extends Instruction {
     @Override
     public Instruction copy() {
         return new TerminateInstructionList();
+    }
+    
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
     }
 }

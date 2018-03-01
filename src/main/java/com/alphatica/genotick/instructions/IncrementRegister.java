@@ -8,7 +8,7 @@ public class IncrementRegister extends RegInstruction {
     private static final long serialVersionUID = 3654031193344071193L;
 
     private IncrementRegister(IncrementRegister i) {
-        this.setRegister(i.getRegister());
+        super(i);
     }
 
     @SuppressWarnings("unused")

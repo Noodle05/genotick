@@ -8,8 +8,7 @@ public class AddRegisterToVariable extends RegVarInstruction {
     private static final long serialVersionUID = 1079449155331923812L;
 
     private AddRegisterToVariable(AddRegisterToVariable i) {
-        this.setRegister(i.getRegister());
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

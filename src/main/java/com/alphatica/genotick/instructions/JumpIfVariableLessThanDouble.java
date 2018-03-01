@@ -7,9 +7,7 @@ public class JumpIfVariableLessThanDouble extends VarDoubleJumpInstruction{
     private static final long serialVersionUID = -8449905052813057724L;
 
     private JumpIfVariableLessThanDouble(JumpIfVariableLessThanDouble i) {
-        this.setVariableArgument(i.getVariableArgument());
-        this.setDoubleArgument(i.getDoubleArgument());
-        this.setAddress(i.getAddress());
+        super(i);
     }
 
     @SuppressWarnings("unused")

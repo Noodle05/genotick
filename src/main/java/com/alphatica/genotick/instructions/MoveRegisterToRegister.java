@@ -8,8 +8,7 @@ public class MoveRegisterToRegister extends RegRegInstruction {
     private static final long serialVersionUID = 1416597000762527293L;
 
     private MoveRegisterToRegister(MoveRegisterToRegister i) {
-        this.setRegister1(i.getRegister1());
-        this.setRegister2(i.getRegister2());
+        super(i);
     }
 
     @SuppressWarnings("unused")

@@ -8,6 +8,16 @@ abstract class VarDoubleInstruction extends VarInstruction {
 
     private double doubleArgument;
 
+    protected VarDoubleInstruction(VarDoubleInstruction i) {
+        super(i);
+        this.doubleArgument = i.doubleArgument;
+    }
+    
+    @SuppressWarnings("unused")
+    public VarDoubleInstruction() {
+        super();
+    }
+
     void setDoubleArgument(double doubleArgument) {
         this.doubleArgument = doubleArgument;
     }
@@ -23,6 +33,11 @@ abstract class VarDoubleInstruction extends VarInstruction {
             doubleArgument = Tools.mutateDouble(1_000_000 * mutator.getNextDouble(), mutator);
         }
         doubleArgument = Tools.mutateDouble(doubleArgument, mutator);
-     }
+    }
+
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
+    }
 }
 

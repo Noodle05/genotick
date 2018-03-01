@@ -7,9 +7,7 @@ public class MoveRelativeDataToVariable extends DataVarInstruction {
     private static final long serialVersionUID = 1308815201295846632L;
 
     private MoveRelativeDataToVariable(MoveRelativeDataToVariable i) {
-        this.setDataOffsetIndex(i.getDataOffsetIndex());
-        this.setDataTableIndex(i.getDataColumnIndex());
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

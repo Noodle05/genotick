@@ -7,8 +7,7 @@ public class MultiplyRegisterByRegister extends RegRegInstruction {
     private static final long serialVersionUID = 7185538925515388482L;
 
     private MultiplyRegisterByRegister(MultiplyRegisterByRegister i) {
-        this.setRegister1(i.getRegister1());
-        this.setRegister2(i.getRegister2());
+        super(i);
     }
 
     @SuppressWarnings("unused")

@@ -7,8 +7,7 @@ public class AddVariableToVariable extends VarVarInstruction {
     private static final long serialVersionUID = 232466498704321646L;
 
     private AddVariableToVariable(AddVariableToVariable i) {
-        this.setVariable1Argument(i.getVariable1Argument());
-        this.setVariable2Argument(i.getVariable2Argument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

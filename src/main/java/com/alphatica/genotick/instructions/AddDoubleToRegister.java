@@ -9,8 +9,7 @@ public class AddDoubleToRegister extends RegDoubleInstruction {
     private static final long serialVersionUID = 2825034534810488187L;
 
     private AddDoubleToRegister(AddDoubleToRegister i) {
-        this.setDoubleArgument(i.getDoubleArgument());
-        this.setRegister(i.getRegister());
+        super(i);
     }
 
     @SuppressWarnings("unused")
@@ -26,4 +25,5 @@ public class AddDoubleToRegister extends RegDoubleInstruction {
     public AddDoubleToRegister copy() {
         return new AddDoubleToRegister(this);
     }
+
 }

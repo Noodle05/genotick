@@ -11,14 +11,12 @@ public class PercentileOfColumn extends RegRegInstruction {
     // This value is replaced before use by mutate()
     protected int percentile = 95;
 
-    @SuppressWarnings("unused")
-    public PercentileOfColumn() {
+    private PercentileOfColumn(PercentileOfColumn i) {
+        super(i);
     }
 
-    private PercentileOfColumn(PercentileOfColumn percentileOfColumn) {
-        this.setRegister1(percentileOfColumn.getRegister1());
-        this.setRegister2(percentileOfColumn.getRegister2());
-        this.percentile = percentileOfColumn.percentile;
+    @SuppressWarnings("unused")
+    public PercentileOfColumn() {
     }
 
     @Override
@@ -39,5 +37,10 @@ public class PercentileOfColumn extends RegRegInstruction {
 
     public int getPercentile() {
         return percentile;
+    }
+
+    @Override 
+    public double getPrevalence(InstructionList il) {
+        return getDecayingPrevalence(il, this.getClass(), 1.0);
     }
 }

@@ -7,8 +7,7 @@ public class MultiplyVariableByDouble extends VarDoubleInstruction {
     private static final long serialVersionUID = -488671617233131162L;
 
     private MultiplyVariableByDouble(MultiplyVariableByDouble i) {
-        this.setDoubleArgument(i.getDoubleArgument());
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

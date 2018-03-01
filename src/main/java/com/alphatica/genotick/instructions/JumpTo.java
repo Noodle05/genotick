@@ -37,4 +37,9 @@ public class JumpTo extends Instruction implements JumpInstruction {
     public int getAddress() {
         return address;
     }
+    
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
+    }
 }

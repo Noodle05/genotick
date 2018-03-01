@@ -7,8 +7,7 @@ public class SqRootOfVariable extends VarVarInstruction {
     private static final long serialVersionUID = -6025395017177611705L;
 
     private SqRootOfVariable(SqRootOfVariable i) {
-        this.setVariable1Argument(i.getVariable1Argument());
-        this.setVariable2Argument(i.getVariable2Argument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

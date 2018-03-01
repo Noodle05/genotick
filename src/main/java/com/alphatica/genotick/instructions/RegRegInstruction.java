@@ -8,6 +8,15 @@ public abstract class RegRegInstruction extends Instruction {
 
     private byte register1;
     private byte register2;
+    
+    protected RegRegInstruction(RegRegInstruction i) {
+        this.register1 = i.register1;
+        this.register2 = i.register2;
+    }
+
+    @SuppressWarnings("unused")
+    public RegRegInstruction() {
+    }
 
     public byte getRegister1() {
         return register1;
@@ -31,5 +40,10 @@ public abstract class RegRegInstruction extends Instruction {
         register1 = value;
         value = Registers.validateRegister(mutator.getNextByte());
         register2 = value;
+    }
+
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
     }
 }

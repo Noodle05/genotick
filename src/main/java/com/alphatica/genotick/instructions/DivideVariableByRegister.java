@@ -7,8 +7,7 @@ public class DivideVariableByRegister extends RegVarInstruction {
     private static final long serialVersionUID = -8300592248680778047L;
 
     private DivideVariableByRegister(DivideVariableByRegister i) {
-        this.setRegister(i.getRegister());
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

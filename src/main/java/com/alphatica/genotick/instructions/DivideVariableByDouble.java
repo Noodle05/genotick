@@ -7,8 +7,7 @@ public class DivideVariableByDouble extends VarDoubleInstruction {
     private static final long serialVersionUID = 2277032167143213475L;
 
     private DivideVariableByDouble(DivideVariableByDouble i) {
-        this.setDoubleArgument(i.getDoubleArgument());
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

@@ -7,8 +7,7 @@ public class MultiplyRegisterByVariable extends RegVarInstruction {
     private static final long serialVersionUID = 5195803067958383416L;
 
     private MultiplyRegisterByVariable(MultiplyRegisterByVariable i) {
-        this.setRegister(i.getRegister());
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

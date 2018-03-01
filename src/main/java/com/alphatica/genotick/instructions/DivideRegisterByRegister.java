@@ -7,8 +7,7 @@ public class DivideRegisterByRegister extends RegRegInstruction {
     private static final long serialVersionUID = 5202607381101727036L;
 
     private DivideRegisterByRegister(DivideRegisterByRegister i) {
-        this.setRegister1(i.getRegister1());
-        this.setRegister2(i.getRegister2());
+        super(i);
     }
 
     @SuppressWarnings("unused")

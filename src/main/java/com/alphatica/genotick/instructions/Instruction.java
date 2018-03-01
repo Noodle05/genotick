@@ -18,6 +18,8 @@ public abstract class Instruction implements Serializable {
     abstract public void mutate(Mutator mutator);
 
     public abstract Instruction copy();
+    
+    public abstract double getPrevalence(InstructionList il);
 
     public String instructionString() throws IllegalAccessException {
         StringBuilder sb = new StringBuilder();
@@ -31,6 +33,16 @@ public abstract class Instruction implements Serializable {
         return sb.toString();
     }
 
+    public static double getDecayingPrevalence(InstructionList il, Class<?> clasz, double basePrevalence) {
+        int count = 1;
+        for(int x=0; x < il.getInstructionCount(); x++) {
+            if(clasz.isInstance(il.getInstruction(x))) {
+                count ++;
+            }
+        }
+        return basePrevalence / count;
+    }
+    
     private List<InstructionField> getInheritedFields(Class<?> aClass) throws IllegalAccessException {
         List<InstructionField> fields = new ArrayList<>();
         Class<?> check = aClass;

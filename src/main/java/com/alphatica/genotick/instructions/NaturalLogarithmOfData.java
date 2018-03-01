@@ -7,9 +7,7 @@ public class NaturalLogarithmOfData extends DataRegInstruction {
     private static final long serialVersionUID = -3598160310785452494L;
 
     private NaturalLogarithmOfData(NaturalLogarithmOfData i) {
-        this.setDataOffsetIndex(i.getDataOffsetIndex());
-        this.setDataTableIndex(i.getDataColumnIndex());
-        this.setRegister(i.getRegister());
+        super(i);
     }
 
     @SuppressWarnings("unused")

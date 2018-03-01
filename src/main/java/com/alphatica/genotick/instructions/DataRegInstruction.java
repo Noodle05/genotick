@@ -8,6 +8,16 @@ abstract public class DataRegInstruction extends DataInstruction {
 
     private byte register;
 
+    protected DataRegInstruction(DataRegInstruction i) {
+        super(i);
+        this.register = i.register;
+    }
+    
+    @SuppressWarnings("unused")
+    public DataRegInstruction() {
+        super();
+    }
+
     public byte getRegister() {
         return register;
     }
@@ -20,5 +30,10 @@ abstract public class DataRegInstruction extends DataInstruction {
     public void mutate(Mutator mutator) {
         super.mutate(mutator);
         register = Registers.validateRegister(mutator.getNextByte());
+    }
+
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
     }
 }

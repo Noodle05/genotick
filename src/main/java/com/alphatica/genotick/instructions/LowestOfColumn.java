@@ -7,13 +7,12 @@ public class LowestOfColumn extends RegRegInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -6945803435707758563L;
 
-    @SuppressWarnings("unused")
-    public LowestOfColumn() {
+    private LowestOfColumn(LowestOfColumn i) {
+        super(i);
     }
 
-    private LowestOfColumn(LowestOfColumn lowestOfColumn) {
-        this.setRegister1(lowestOfColumn.getRegister1());
-        this.setRegister2(lowestOfColumn.getRegister2());
+    @SuppressWarnings("unused")
+    public LowestOfColumn() {
     }
 
     @Override

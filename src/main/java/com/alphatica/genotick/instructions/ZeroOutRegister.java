@@ -8,7 +8,7 @@ public class ZeroOutRegister extends RegInstruction {
     private static final long serialVersionUID = 7925325642053814475L;
 
     private ZeroOutRegister(ZeroOutRegister i) {
-        this.setRegister(i.getRegister());
+        super(i);
     }
 
     @SuppressWarnings("unused")

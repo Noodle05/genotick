@@ -7,8 +7,7 @@ public class MultiplyRegisterByDouble extends RegDoubleInstruction {
     private static final long serialVersionUID = 7017210446264669933L;
 
     private MultiplyRegisterByDouble(MultiplyRegisterByDouble i) {
-        this.setDoubleArgument(i.getDoubleArgument());
-        this.setRegister(i.getRegister());
+        super(i);
     }
 
     @SuppressWarnings("unused")

@@ -7,8 +7,7 @@ public class SqRootOfRegister extends RegRegInstruction {
     private static final long serialVersionUID = -2097327161652030023L;
 
     private SqRootOfRegister(SqRootOfRegister i) {
-        this.setRegister1(i.getRegister1());
-        this.setRegister2(i.getRegister2());
+        super(i);
     }
 
     @SuppressWarnings("unused")

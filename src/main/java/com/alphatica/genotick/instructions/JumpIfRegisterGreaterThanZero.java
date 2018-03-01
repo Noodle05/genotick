@@ -7,8 +7,7 @@ public class JumpIfRegisterGreaterThanZero extends RegJumpInstruction {
     private static final long serialVersionUID = 2932427307222806723L;
 
     private JumpIfRegisterGreaterThanZero(JumpIfRegisterGreaterThanZero i) {
-        this.setRegister(i.getRegister());
-        this.setAddress(i.getAddress());
+        super(i);
     }
 
     @SuppressWarnings("unused")

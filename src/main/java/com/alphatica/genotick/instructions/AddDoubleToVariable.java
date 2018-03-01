@@ -8,8 +8,7 @@ public class AddDoubleToVariable extends VarDoubleInstruction {
     private static final long serialVersionUID = -6197886980513050186L;
 
     private AddDoubleToVariable(AddDoubleToVariable i) {
-        this.setDoubleArgument(i.getDoubleArgument());
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

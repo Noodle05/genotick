@@ -8,7 +8,7 @@ public class DecrementRegister extends RegInstruction {
     private static final long serialVersionUID = -7630060970364313126L;
 
     private DecrementRegister(DecrementRegister i) {
-        this.setRegister(i.getRegister());
+        super(i);
     }
 
     @SuppressWarnings("unused")
