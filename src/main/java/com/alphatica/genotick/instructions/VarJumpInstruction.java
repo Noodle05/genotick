@@ -24,9 +24,10 @@ abstract class VarJumpInstruction extends VarInstruction implements JumpInstruct
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         address = mutator.getNextInt();
+        return this;
     }
 
     void setAddress(int address) {

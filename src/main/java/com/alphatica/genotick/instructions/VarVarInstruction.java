@@ -35,9 +35,10 @@ abstract class VarVarInstruction extends Instruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         variable1Argument = mutator.getNextInt();
         variable2Argument = mutator.getNextInt();
+        return this;
     }
 
     @Override

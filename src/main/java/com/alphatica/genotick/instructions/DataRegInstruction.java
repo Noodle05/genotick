@@ -27,9 +27,10 @@ abstract public class DataRegInstruction extends DataInstruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         register = Registers.validateRegister(mutator.getNextByte());
+        return this;
     }
 
     @Override

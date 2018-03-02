@@ -25,9 +25,9 @@ abstract class RegInstruction extends Instruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         register = Registers.validateRegister(mutator.getNextByte());
-
+        return this;
     }
 
     @Override

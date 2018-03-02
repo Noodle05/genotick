@@ -24,9 +24,10 @@ abstract class DataVarInstruction extends DataInstruction {
         return variableArgument;
     }
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         variableArgument = mutator.getNextInt();
+        return this;
     }
 
     @Override

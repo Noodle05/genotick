@@ -27,8 +27,9 @@ abstract class RegRegJumpInstruction extends  RegRegInstruction implements JumpI
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         address = mutator.getNextInt();
+        return this;
     }
 }

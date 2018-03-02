@@ -58,11 +58,10 @@ class SimpleMutator implements Mutator {
     public Instruction getRandomInstruction(InstructionList il) {
         while(true) {
             int index = random.nextInt(totalInstructions);
-            Instruction newInstruction = createNewInstruction(index);
+            Instruction newInstruction = createNewInstruction(index).mutate(this);
             double prevalence = newInstruction.getPrevalence(il);
             
             if(prevalence == 1.0 || prevalence >= random.nextDouble()) {
-                newInstruction.mutate(this);
                 return newInstruction;
             }
         }

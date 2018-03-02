@@ -27,6 +27,6 @@ public class AverageOfColumn extends RegRegInstruction {
     
     @Override 
     public double getPrevalence(InstructionList il) {
-        return getDecayingPrevalence(il, this.getClass(), 1.0);
+        return getDecayingPrevalence(il, this, this.getClass(), 1.0);
     }
 }

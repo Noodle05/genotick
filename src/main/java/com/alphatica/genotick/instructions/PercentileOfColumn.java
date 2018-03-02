@@ -30,9 +30,10 @@ public class PercentileOfColumn extends RegRegInstruction {
     }
     
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         percentile = (Math.abs(mutator.getNextInt()) % 100) + 1;
+        return this;
     }
 
     public int getPercentile() {
@@ -41,6 +42,6 @@ public class PercentileOfColumn extends RegRegInstruction {
 
     @Override 
     public double getPrevalence(InstructionList il) {
-        return getDecayingPrevalence(il, this.getClass(), 1.0);
+        return getDecayingPrevalence(il, this, this.getClass(), 1.0);
     }
 }

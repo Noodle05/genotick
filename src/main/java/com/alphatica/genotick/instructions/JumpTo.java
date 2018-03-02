@@ -24,8 +24,9 @@ public class JumpTo extends Instruction implements JumpInstruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         address = mutator.getNextInt();
+        return this;
     }
 
     @Override

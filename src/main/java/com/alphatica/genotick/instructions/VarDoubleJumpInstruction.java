@@ -27,8 +27,9 @@ abstract class VarDoubleJumpInstruction extends  VarDoubleInstruction implements
         this.address = address;
     }
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         address = mutator.getNextInt();
+        return this;
     }
 }
