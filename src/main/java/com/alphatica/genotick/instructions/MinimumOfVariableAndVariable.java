@@ -2,7 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class MinimumOfVariableAndVariable extends VarVarInstruction {
+public class MinimumOfVariableAndVariable extends VarVarInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 2684230146996510206L;
 

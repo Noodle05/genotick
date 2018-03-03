@@ -2,7 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class AddDoubleToVariable extends VarDoubleInstruction {
+public class AddDoubleToVariable extends VarDoubleInstruction implements MathInstruction {
 
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -6197886980513050186L;

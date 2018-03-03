@@ -2,7 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class CeilingOfData extends DataRegInstruction {
+public class CeilingOfData extends DataRegInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -3598160310785452494L;
 

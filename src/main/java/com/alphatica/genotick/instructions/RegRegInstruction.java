@@ -59,6 +59,6 @@ public abstract class RegRegInstruction extends Instruction {
             }
         }
         // Default prevalence
-        return 1.0;
+        return super.getPrevalence(il);
     }
 }

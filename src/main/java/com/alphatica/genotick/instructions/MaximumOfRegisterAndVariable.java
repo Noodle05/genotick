@@ -2,7 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class MaximumOfRegisterAndVariable extends RegVarInstruction {
+public class MaximumOfRegisterAndVariable extends RegVarInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -7846370685515767796L;
 

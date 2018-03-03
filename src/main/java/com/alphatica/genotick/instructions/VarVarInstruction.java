@@ -40,9 +40,4 @@ abstract class VarVarInstruction extends Instruction {
         variable2Argument = mutator.getNextInt();
         return this;
     }
-
-    @Override
-    public double getPrevalence(InstructionList il) {
-        return 1.0;
-    }
 }

@@ -32,9 +32,4 @@ abstract public class DataRegInstruction extends DataInstruction {
         register = Registers.validateRegister(mutator.getNextByte());
         return this;
     }
-
-    @Override
-    public double getPrevalence(InstructionList il) {
-        return 1.0;
-    }
 }

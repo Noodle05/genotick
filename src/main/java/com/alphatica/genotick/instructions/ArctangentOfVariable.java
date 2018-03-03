@@ -2,7 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class ArctangentOfVariable extends VarVarInstruction {
+public class ArctangentOfVariable extends VarVarInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -3112125542251877233L;
 

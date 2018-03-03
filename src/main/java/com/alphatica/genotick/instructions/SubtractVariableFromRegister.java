@@ -2,7 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class SubtractVariableFromRegister extends RegVarInstruction {
+public class SubtractVariableFromRegister extends RegVarInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -8639456508845181659L;
 

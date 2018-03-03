@@ -2,7 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class HyperbolicSineOfRegister extends RegRegInstruction {
+public class HyperbolicSineOfRegister extends RegRegInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -5965927479237202603L;
 

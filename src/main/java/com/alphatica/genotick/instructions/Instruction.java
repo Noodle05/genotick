@@ -19,7 +19,21 @@ public abstract class Instruction implements Serializable {
 
     public abstract Instruction copy();
     
-    public abstract double getPrevalence(InstructionList il);
+    public double getPrevalence(InstructionList il) {
+        if(this instanceof MathInstruction) {
+            if(il.getInstructionCount() > 0) {
+                Instruction in = il.getInstruction(il.getInstructionCount()-1);
+                if(in instanceof MathInstruction) {
+                    // If a previous instruction is also a math instruction,
+                    // lower its probability of having multiple math calculations
+                    // in a row without branches or decision logic.
+                    return .3;
+                }
+            }
+        }
+        // Default prevalence
+        return 1.0;
+    }
 
     public String instructionString() throws IllegalAccessException {
         StringBuilder sb = new StringBuilder();

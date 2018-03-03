@@ -2,7 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class HighestOfColumn extends RegRegInstruction {
+public class HighestOfColumn extends RegRegInstruction implements MathInstruction {
 
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -7922049215420858405L;

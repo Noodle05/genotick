@@ -3,7 +3,7 @@ package com.alphatica.genotick.instructions;
 import com.alphatica.genotick.mutator.Mutator;
 import com.alphatica.genotick.processor.Processor;
 
-public class FibonacciOfColumn extends RegRegInstruction {
+public class FibonacciOfColumn extends RegRegInstruction implements MathInstruction {
 
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -329518949586814597L;
