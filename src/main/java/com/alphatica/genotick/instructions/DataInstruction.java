@@ -34,8 +34,9 @@ abstract public class DataInstruction extends Instruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         dataTableIndex = mutator.getNextColumn();
         dataOffsetIndex = mutator.getNextInt();
+        return this;
     }
 }

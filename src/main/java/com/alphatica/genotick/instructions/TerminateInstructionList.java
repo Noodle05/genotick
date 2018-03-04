@@ -16,10 +16,11 @@ public class TerminateInstructionList extends Instruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         /*
         Empty. Nothing to mutate.
          */
+        return this;
     }
 
     @Override

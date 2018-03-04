@@ -27,9 +27,10 @@ abstract class RegVarInstruction extends RegInstruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         variableArgument = mutator.getNextInt();
+        return this;
     }
 
     @Override

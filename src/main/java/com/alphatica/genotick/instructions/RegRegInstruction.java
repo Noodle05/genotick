@@ -35,15 +35,30 @@ public abstract class RegRegInstruction extends Instruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         byte value = Registers.validateRegister(mutator.getNextByte());
         register1 = value;
         value = Registers.validateRegister(mutator.getNextByte());
         register2 = value;
+        return this;
     }
 
     @Override
     public double getPrevalence(InstructionList il) {
-        return 1.0;
+        if(il.getInstructionCount() > 0) {
+            Instruction in = il.getInstruction(il.getInstructionCount()-1);
+            if(in instanceof RegRegInstruction) {
+                RegRegInstruction rin = (RegRegInstruction)in;
+                if(rin.register1 == this.register1) {
+                    // If a previous instruction is also a register instruction,
+                    // lower its probability if it is likely to write to the same
+                    // instruction as this instruction.  Otherwise the previous
+                    // instructions result is overwritten and ignored.
+                    return .3;
+                }
+            }
+        }
+        // Default prevalence
+        return super.getPrevalence(il);
     }
 }

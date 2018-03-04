@@ -3,91 +3,8 @@ package com.alphatica.genotick.processor;
 import com.alphatica.genotick.data.ColumnAccess;
 import com.alphatica.genotick.genotick.Prediction;
 import com.alphatica.genotick.genotick.RobotData;
-import com.alphatica.genotick.instructions.AddDoubleToRegister;
-import com.alphatica.genotick.instructions.AddDoubleToVariable;
-import com.alphatica.genotick.instructions.AddRegisterToRegister;
-import com.alphatica.genotick.instructions.AddRegisterToVariable;
-import com.alphatica.genotick.instructions.AddVariableToVariable;
-import com.alphatica.genotick.instructions.AverageOfColumn;
-import com.alphatica.genotick.instructions.DataInstruction;
-import com.alphatica.genotick.instructions.DecrementRegister;
-import com.alphatica.genotick.instructions.DecrementVariable;
-import com.alphatica.genotick.instructions.DivideRegisterByDouble;
-import com.alphatica.genotick.instructions.DivideRegisterByRegister;
-import com.alphatica.genotick.instructions.DivideRegisterByVariable;
-import com.alphatica.genotick.instructions.DivideVariableByDouble;
-import com.alphatica.genotick.instructions.DivideVariableByRegister;
-import com.alphatica.genotick.instructions.DivideVariableByVariable;
-import com.alphatica.genotick.instructions.HighestOfColumn;
-import com.alphatica.genotick.instructions.IncrementRegister;
-import com.alphatica.genotick.instructions.IncrementVariable;
-import com.alphatica.genotick.instructions.Instruction;
-import com.alphatica.genotick.instructions.InstructionList;
-import com.alphatica.genotick.instructions.JumpIfRegisterEqualDouble;
-import com.alphatica.genotick.instructions.JumpIfRegisterEqualRegister;
-import com.alphatica.genotick.instructions.JumpIfRegisterEqualZero;
-import com.alphatica.genotick.instructions.JumpIfRegisterGreaterThanDouble;
-import com.alphatica.genotick.instructions.JumpIfRegisterGreaterThanRegister;
-import com.alphatica.genotick.instructions.JumpIfRegisterGreaterThanZero;
-import com.alphatica.genotick.instructions.JumpIfRegisterLessThanDouble;
-import com.alphatica.genotick.instructions.JumpIfRegisterLessThanRegister;
-import com.alphatica.genotick.instructions.JumpIfRegisterLessThanZero;
-import com.alphatica.genotick.instructions.JumpIfRegisterNotEqualDouble;
-import com.alphatica.genotick.instructions.JumpIfRegisterNotEqualRegister;
-import com.alphatica.genotick.instructions.JumpIfRegisterNotEqualZero;
-import com.alphatica.genotick.instructions.JumpIfVariableEqualDouble;
-import com.alphatica.genotick.instructions.JumpIfVariableEqualRegister;
-import com.alphatica.genotick.instructions.JumpIfVariableEqualVariable;
-import com.alphatica.genotick.instructions.JumpIfVariableEqualZero;
-import com.alphatica.genotick.instructions.JumpIfVariableGreaterThanDouble;
-import com.alphatica.genotick.instructions.JumpIfVariableGreaterThanRegister;
-import com.alphatica.genotick.instructions.JumpIfVariableGreaterThanVariable;
-import com.alphatica.genotick.instructions.JumpIfVariableGreaterThanZero;
-import com.alphatica.genotick.instructions.JumpIfVariableLessThanDouble;
-import com.alphatica.genotick.instructions.JumpIfVariableLessThanRegister;
-import com.alphatica.genotick.instructions.JumpIfVariableLessThanVariable;
-import com.alphatica.genotick.instructions.JumpIfVariableLessThanZero;
-import com.alphatica.genotick.instructions.JumpIfVariableNotEqualDouble;
-import com.alphatica.genotick.instructions.JumpIfVariableNotEqualRegister;
-import com.alphatica.genotick.instructions.JumpIfVariableNotEqualVariable;
-import com.alphatica.genotick.instructions.JumpIfVariableNotEqualZero;
-import com.alphatica.genotick.instructions.JumpTo;
-import com.alphatica.genotick.instructions.LowestOfColumn;
-import com.alphatica.genotick.instructions.MoveDataToRegister;
-import com.alphatica.genotick.instructions.MoveDataToVariable;
-import com.alphatica.genotick.instructions.MoveDoubleToRegister;
-import com.alphatica.genotick.instructions.MoveDoubleToVariable;
-import com.alphatica.genotick.instructions.MoveRegisterToRegister;
-import com.alphatica.genotick.instructions.MoveRegisterToVariable;
-import com.alphatica.genotick.instructions.MoveRelativeDataToRegister;
-import com.alphatica.genotick.instructions.MoveRelativeDataToVariable;
-import com.alphatica.genotick.instructions.MoveVariableToRegister;
-import com.alphatica.genotick.instructions.MoveVariableToVariable;
-import com.alphatica.genotick.instructions.MultiplyRegisterByDouble;
-import com.alphatica.genotick.instructions.MultiplyRegisterByRegister;
-import com.alphatica.genotick.instructions.MultiplyRegisterByVariable;
-import com.alphatica.genotick.instructions.MultiplyVariableByDouble;
-import com.alphatica.genotick.instructions.MultiplyVariableByVariable;
-import com.alphatica.genotick.instructions.NaturalLogarithmOfData;
-import com.alphatica.genotick.instructions.NaturalLogarithmOfRegister;
-import com.alphatica.genotick.instructions.NaturalLogarithmOfVariable;
-import com.alphatica.genotick.instructions.PercentileOfColumn;
-import com.alphatica.genotick.instructions.ReturnRegisterAsResult;
-import com.alphatica.genotick.instructions.ReturnVariableAsResult;
-import com.alphatica.genotick.instructions.SqRootOfRegister;
-import com.alphatica.genotick.instructions.SqRootOfVariable;
-import com.alphatica.genotick.instructions.SubtractDoubleFromRegister;
-import com.alphatica.genotick.instructions.SubtractDoubleFromVariable;
-import com.alphatica.genotick.instructions.SubtractRegisterFromRegister;
-import com.alphatica.genotick.instructions.SubtractRegisterFromVariable;
-import com.alphatica.genotick.instructions.SubtractVariableFromRegister;
-import com.alphatica.genotick.instructions.SubtractVariableFromVariable;
-import com.alphatica.genotick.instructions.SumOfColumn;
-import com.alphatica.genotick.instructions.SwapRegisters;
-import com.alphatica.genotick.instructions.SwapVariables;
-import com.alphatica.genotick.instructions.TerminateInstructionList;
-import com.alphatica.genotick.instructions.ZeroOutRegister;
-import com.alphatica.genotick.instructions.ZeroOutVariable;
+import com.alphatica.genotick.instructions.*;
+
 import com.alphatica.genotick.population.Robot;
 import com.alphatica.genotick.population.RobotExecutor;
 import com.alphatica.genotick.population.RobotExecutorSettings;
@@ -605,12 +522,8 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
 
     @Override
     public void execute(NaturalLogarithmOfData ins) {
-        int column = fixColumn(ins.getDataColumnIndex());
-        int offset = fixOffset(ins.getDataOffsetIndex());
-        if(!columnAccess.setAccessedColumn(column)) throw new NotEnoughDataException();
-        double value = Math.log(data.getTrainingPriceData(column,offset));
-        registers[ins.getRegister()] = value;
-    }
+        registers[ins.getRegister()] = Math.log(dataRegInstructionGetTrainingPriceData(ins));
+   }
 
     @Override
     public void execute(NaturalLogarithmOfRegister ins) {
@@ -621,6 +534,23 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(NaturalLogarithmOfVariable ins) {
         double value = Math.log(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+
+    @Override
+    public void execute(NaturalLogarithm10OfData ins) {
+        registers[ins.getRegister()] = Math.log10(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(NaturalLogarithm10OfRegister ins) {
+        double value = Math.log10(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(NaturalLogarithm10OfVariable ins) {
+        double value = Math.log10(instructionList.getVariable(ins.getVariable2Argument()));
         instructionList.setVariable(ins.getVariable1Argument(),value);
     }
 
@@ -637,6 +567,18 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     }
 
     @Override
+    public void execute(CbRootOfRegister ins) {
+        double value = Math.cbrt(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(CbRootOfVariable ins) {
+        double value = Math.cbrt(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+
+    @Override
     public void execute(SumOfColumn ins) {
         int column = fixColumn(ins.getRegister1());
         int length = fixLength(registers[ins.getRegister2()]);
@@ -645,7 +587,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
 
     @Override
     public void execute(AverageOfColumn ins) {
-        int column = fixColumn(ins.getRegister1());
+        int column = fixColumn(registers[ins.getRegister1()]);
         int length = fixLength(registers[ins.getRegister2()]);
         double sum = getSum(column, length);
         registers[0] = sum / length;
@@ -663,7 +605,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
 
     @Override
     public void execute(PercentileOfColumn ins) {
-        int column = fixColumn(ins.getRegister1());
+        int column = fixColumn(registers[ins.getRegister1()]);
         int length = fixLength(registers[ins.getRegister2()]);
         if(length == 0) {
             return;
@@ -678,6 +620,21 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
         registers[0] = priceDataList[percentileIndex-1];
     }
  
+    @Override
+    public void execute(FibonacciOfColumn ins) {
+        int column = fixColumn(registers[ins.getRegister1()]);
+        int length = Math.max(2, fixLength(registers[ins.getRegister2()]));
+        if(!columnAccess.setAccessedColumn(column)) throw new NotEnoughDataException();
+        
+        double[] priceDataList = new double[length];
+        priceDataList[0] = data.getTrainingPriceData(column,0);
+        priceDataList[1] = data.getTrainingPriceData(column,1);
+        for(int i = 2; i < length; i++) {
+            priceDataList[i] =  priceDataList[i-1] + priceDataList[i-2];
+        }
+        registers[0] = priceDataList[length-1];
+    }
+
     @Override
     public void execute(SwapVariables ins) {
         double var1 = instructionList.getVariable(ins.getVariable1Argument());
@@ -806,7 +763,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
 
     @Override
     public void execute(LowestOfColumn ins) {
-        int column = fixColumn(ins.getRegister1());
+        int column = fixColumn(registers[ins.getRegister1()]);
         int length = fixLength(registers[ins.getRegister2()]);
         if(!columnAccess.setAccessedColumn(column)) throw new NotEnoughDataException();
         double lowest = data.getTrainingPriceData(column,0);
@@ -817,6 +774,383 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
             }
         }
         registers[0] = lowest;
+    }
+
+    @Override
+    public void execute(AbsoluteOfData ins) {
+        registers[ins.getRegister()] = Math.abs(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(AbsoluteOfRegister ins) {
+        double value = Math.abs(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(AbsoluteOfVariable ins) {
+        double value = Math.abs(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+
+    @Override
+    public void execute(NegationOfData ins) {
+        registers[ins.getRegister()] = dataRegInstructionGetTrainingPriceData(ins) * -1;
+    }
+
+    @Override
+    public void execute(NegationOfRegister ins) {
+        double value = registers[ins.getRegister2()] * -1;
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(NegationOfVariable ins) {
+        double value = instructionList.getVariable(ins.getVariable2Argument()) * -1;
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+
+    @Override
+    public void execute(CeilingOfData ins) {
+        registers[ins.getRegister()] = Math.ceil(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(CeilingOfRegister ins) {
+        double value = Math.ceil(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(CeilingOfVariable ins) {
+        double value = Math.ceil(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+
+    @Override
+    public void execute(FloorOfData ins) {
+        registers[ins.getRegister()] = Math.floor(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(FloorOfRegister ins) {
+        double value = Math.floor(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(FloorOfVariable ins) {
+        double value = Math.round(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+
+    @Override
+    public void execute(RoundOfData ins) {
+        registers[ins.getRegister()] = Math.round(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(RoundOfRegister ins) {
+        double value = Math.round(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(RoundOfVariable ins) {
+        double value = Math.floor(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+    
+    @Override
+    public void execute(MaximumOfRegisterAndDouble ins) {
+        int reg = ins.getRegister();
+        registers[reg] = Math.max(registers[reg], ins.getDoubleArgument());
+    }
+
+    @Override
+    public void execute(MaximumOfRegisterAndRegister ins) {
+        int reg1 = ins.getRegister1();
+        int reg2 = ins.getRegister2();
+        registers[reg1] = Math.max(registers[reg1], registers[reg2]);
+    }
+
+    @Override
+    public void execute(MaximumOfRegisterAndVariable ins) {
+        int reg = ins.getRegister();
+        registers[reg] = Math.max(registers[reg], instructionList.getVariable(ins.getVariableArgument()));
+    }
+
+    @Override
+    public void execute(MaximumOfVariableAndDouble ins) {
+        double var = instructionList.getVariable(ins.getVariableArgument());
+        double result = Math.max(var, ins.getDoubleArgument());
+        instructionList.setVariable(ins.getVariableArgument(), result);
+    }
+
+    @Override
+    public void execute(MaximumOfVariableAndVariable ins) {
+        double var1 = instructionList.getVariable(ins.getVariable1Argument());
+        double var2 = instructionList.getVariable(ins.getVariable2Argument());
+        instructionList.setVariable(ins.getVariable1Argument(), Math.max(var1,  var2));
+    }
+
+    @Override
+    public void execute(MinimumOfRegisterAndDouble ins) {
+        int reg = ins.getRegister();
+        registers[reg] = Math.min(registers[reg], ins.getDoubleArgument());
+    }
+
+    @Override
+    public void execute(MinimumOfRegisterAndRegister ins) {
+        int reg1 = ins.getRegister1();
+        int reg2 = ins.getRegister2();
+        registers[reg1] = Math.min(registers[reg1], registers[reg2]);
+    }
+
+    @Override
+    public void execute(MinimumOfRegisterAndVariable ins) {
+        int reg = ins.getRegister();
+        registers[reg] = Math.min(registers[reg], instructionList.getVariable(ins.getVariableArgument()));
+    }
+
+    @Override
+    public void execute(MinimumOfVariableAndDouble ins) {
+        double var = instructionList.getVariable(ins.getVariableArgument());
+        double result = Math.min(var, ins.getDoubleArgument());
+        instructionList.setVariable(ins.getVariableArgument(), result);
+    }
+
+    @Override
+    public void execute(MinimumOfVariableAndVariable ins) {
+        double var1 = instructionList.getVariable(ins.getVariable1Argument());
+        double var2 = instructionList.getVariable(ins.getVariable2Argument());
+        instructionList.setVariable(ins.getVariable1Argument(), Math.min(var1,  var2));
+    }
+
+    @Override
+    public void execute(ModulusOfRegisterAndDouble ins) {
+        int reg = ins.getRegister();
+        registers[reg] = registers[reg] % ins.getDoubleArgument();
+    }
+
+    @Override
+    public void execute(ModulusOfRegisterAndRegister ins) {
+        int reg1 = ins.getRegister1();
+        int reg2 = ins.getRegister2();
+        registers[reg1] = registers[reg1] % registers[reg2];
+    }
+
+    @Override
+    public void execute(ModulusOfRegisterAndVariable ins) {
+        int reg = ins.getRegister();
+        registers[reg] = registers[reg] % instructionList.getVariable(ins.getVariableArgument());
+    }
+
+    @Override
+    public void execute(ModulusOfVariableAndDouble ins) {
+        double var = instructionList.getVariable(ins.getVariableArgument());
+        double result = var % ins.getDoubleArgument();
+        instructionList.setVariable(ins.getVariableArgument(), result);
+    }
+
+    @Override
+    public void execute(ModulusOfVariableAndVariable ins) {
+        double var1 = instructionList.getVariable(ins.getVariable1Argument());
+        double var2 = instructionList.getVariable(ins.getVariable2Argument());
+        instructionList.setVariable(ins.getVariable1Argument(), var1 % var2);
+    }
+
+    @Override
+    public void execute(HypotOfRegisterAndDouble ins) {
+        int reg = ins.getRegister();
+        registers[reg] = Math.hypot(registers[reg], ins.getDoubleArgument());
+    }
+
+    @Override
+    public void execute(HypotOfRegisterAndRegister ins) {
+        int reg1 = ins.getRegister1();
+        int reg2 = ins.getRegister2();
+        registers[reg1] = Math.hypot(registers[reg1], registers[reg2]);
+    }
+
+    @Override
+    public void execute(HypotOfRegisterAndVariable ins) {
+        int reg = ins.getRegister();
+        registers[reg] = Math.hypot(registers[reg], instructionList.getVariable(ins.getVariableArgument()));
+    }
+
+    @Override
+    public void execute(HypotOfVariableAndDouble ins) {
+        double var = instructionList.getVariable(ins.getVariableArgument());
+        double result = Math.hypot(var, ins.getDoubleArgument());
+        instructionList.setVariable(ins.getVariableArgument(), result);
+    }
+
+    @Override
+    public void execute(HypotOfVariableAndVariable ins) {
+        double var1 = instructionList.getVariable(ins.getVariable1Argument());
+        double var2 = instructionList.getVariable(ins.getVariable2Argument());
+        instructionList.setVariable(ins.getVariable1Argument(), Math.hypot(var1,  var2));
+    }
+
+    @Override
+    public void execute(CosineOfData ins) {
+        registers[ins.getRegister()] = Math.cos(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(CosineOfRegister ins) {
+        double value = Math.cos(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(CosineOfVariable ins) {
+        double value = Math.cos(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+    
+    @Override
+    public void execute(ArccosineOfData ins) {
+        registers[ins.getRegister()] = Math.acos(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(ArccosineOfRegister ins) {
+        double value = Math.acos(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(ArccosineOfVariable ins) {
+        double value = Math.acos(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+    
+    @Override
+    public void execute(SineOfData ins) {
+        registers[ins.getRegister()] = Math.sin(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(SineOfRegister ins) {
+        double value = Math.sin(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(SineOfVariable ins) {
+        double value = Math.sin(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+    
+    @Override
+    public void execute(ArcsineOfData ins) {
+        registers[ins.getRegister()] = Math.asin(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(ArcsineOfRegister ins) {
+        double value = Math.asin(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(ArcsineOfVariable ins) {
+        double value = Math.asin(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+    
+    @Override
+    public void execute(TangentOfData ins) {
+        registers[ins.getRegister()] = Math.tan(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(TangentOfRegister ins) {
+        double value = Math.tan(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(TangentOfVariable ins) {
+        double value = Math.tan(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+    
+    @Override
+    public void execute(ArctangentOfData ins) {
+        registers[ins.getRegister()] = Math.atan(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(ArctangentOfRegister ins) {
+        double value = Math.atan(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(ArctangentOfVariable ins) {
+        double value = Math.atan(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+    
+    @Override
+    public void execute(HyperbolicSineOfData ins) {
+        registers[ins.getRegister()] = Math.sinh(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(HyperbolicSineOfRegister ins) {
+        double value = Math.sinh(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(HyperbolicSineOfVariable ins) {
+        double value = Math.sinh(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+
+    @Override
+    public void execute(HyperbolicCosineOfData ins) {
+        registers[ins.getRegister()] = Math.cosh(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(HyperbolicCosineOfRegister ins) {
+        double value = Math.cosh(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(HyperbolicCosineOfVariable ins) {
+        double value = Math.cosh(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+
+    @Override
+    public void execute(HyperbolicTangentOfData ins) {
+        registers[ins.getRegister()] = Math.tanh(dataRegInstructionGetTrainingPriceData(ins));
+    }
+
+    @Override
+    public void execute(HyperbolicTangentOfRegister ins) {
+        double value = Math.tanh(registers[ins.getRegister2()]);
+        registers[ins.getRegister1()] = value;
+    }
+
+    @Override
+    public void execute(HyperbolicTangentOfVariable ins) {
+        double value = Math.tanh(instructionList.getVariable(ins.getVariable2Argument()));
+        instructionList.setVariable(ins.getVariable1Argument(),value);
+    }
+
+    private double dataRegInstructionGetTrainingPriceData(DataRegInstruction ins) {
+        int column = fixColumn(ins.getDataColumnIndex());
+        int offset = fixOffset(ins.getDataOffsetIndex());
+        if(!columnAccess.setAccessedColumn(column)) throw new NotEnoughDataException();
+        return data.getTrainingPriceData(column,offset);
     }
 
     private int getRelativeOffset(DataInstruction ins) {

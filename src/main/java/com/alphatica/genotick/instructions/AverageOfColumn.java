@@ -2,7 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class AverageOfColumn extends RegRegInstruction {
+public class AverageOfColumn extends RegRegInstruction implements MathInstruction {
 
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -329518949586814597L;
@@ -27,6 +27,6 @@ public class AverageOfColumn extends RegRegInstruction {
     
     @Override 
     public double getPrevalence(InstructionList il) {
-        return getDecayingPrevalence(il, this.getClass(), 1.0);
+        return getDecayingPrevalence(il, this, this.getClass(), 1.0);
     }
 }

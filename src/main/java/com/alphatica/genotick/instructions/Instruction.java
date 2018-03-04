@@ -15,11 +15,25 @@ public abstract class Instruction implements Serializable {
 
     abstract public void executeOn(Processor processor);
 
-    abstract public void mutate(Mutator mutator);
+    abstract public Instruction mutate(Mutator mutator);
 
     public abstract Instruction copy();
     
-    public abstract double getPrevalence(InstructionList il);
+    public double getPrevalence(InstructionList il) {
+        if(this instanceof MathInstruction) {
+            if(il.getInstructionCount() > 0) {
+                Instruction in = il.getInstruction(il.getInstructionCount()-1);
+                if(in instanceof MathInstruction) {
+                    // If a previous instruction is also a math instruction,
+                    // lower its probability of having multiple math calculations
+                    // in a row without branches or decision logic.
+                    return .3;
+                }
+            }
+        }
+        // Default prevalence
+        return 1.0;
+    }
 
     public String instructionString() throws IllegalAccessException {
         StringBuilder sb = new StringBuilder();
@@ -33,7 +47,7 @@ public abstract class Instruction implements Serializable {
         return sb.toString();
     }
 
-    public static double getDecayingPrevalence(InstructionList il, Class<?> clasz, double basePrevalence) {
+    public static double getDecayingPrevalence(InstructionList il, Instruction in, Class<?> clasz, double basePrevalence) {
         int count = 1;
         for(int x=0; x < il.getInstructionCount(); x++) {
             if(clasz.isInstance(il.getInstruction(x))) {

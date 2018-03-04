@@ -23,9 +23,10 @@ abstract class RegJumpInstruction extends RegInstruction implements JumpInstruct
         return address;
     }
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         address = mutator.getNextInt();
+        return this;
     }
 
     void setAddress(int address) {

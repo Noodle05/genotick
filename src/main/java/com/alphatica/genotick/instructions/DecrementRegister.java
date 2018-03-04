@@ -3,7 +3,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class DecrementRegister extends RegInstruction {
+public class DecrementRegister extends RegInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -7630060970364313126L;
 

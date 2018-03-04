@@ -27,13 +27,9 @@ abstract public class DataRegInstruction extends DataInstruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         register = Registers.validateRegister(mutator.getNextByte());
-    }
-
-    @Override
-    public double getPrevalence(InstructionList il) {
-        return 1.0;
+        return this;
     }
 }
