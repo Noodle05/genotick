@@ -8,7 +8,13 @@ abstract class RegVarJumpInstruction extends RegVarInstruction implements JumpIn
 
     private int address;
 
-    RegVarJumpInstruction() {
+    protected RegVarJumpInstruction(RegVarJumpInstruction i) {
+        super(i);
+        this.address = i.address;
+    }
+
+    protected RegVarJumpInstruction() {
+        super();
         address = 0;
     }
 
@@ -22,10 +28,10 @@ abstract class RegVarJumpInstruction extends RegVarInstruction implements JumpIn
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         address = mutator.getNextInt();
+        return this;
     }
-
 
 }

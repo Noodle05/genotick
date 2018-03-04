@@ -2,13 +2,12 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class MultiplyVariableByVariable extends VarVarInstruction {
+public class MultiplyVariableByVariable extends VarVarInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -2530246252784080647L;
 
     private MultiplyVariableByVariable(MultiplyVariableByVariable i) {
-        this.setVariable1Argument(i.getVariable1Argument());
-        this.setVariable2Argument(i.getVariable2Argument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

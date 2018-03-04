@@ -2,12 +2,12 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class IncrementVariable extends VarInstruction {
+public class IncrementVariable extends VarInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -7224362880966273739L;
 
     private IncrementVariable(IncrementVariable i) {
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

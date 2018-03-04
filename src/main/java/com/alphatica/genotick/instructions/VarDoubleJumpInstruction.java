@@ -8,9 +8,16 @@ abstract class VarDoubleJumpInstruction extends  VarDoubleInstruction implements
 
     private int address;
 
-    VarDoubleJumpInstruction() {
+    protected VarDoubleJumpInstruction(VarDoubleJumpInstruction i) {
+        super(i);
+        this.address = i.address;
+    }
+
+    protected VarDoubleJumpInstruction() {
+        super();
         address = 0;
     }
+    
     @Override
     public int getAddress() {
         return address;
@@ -20,8 +27,9 @@ abstract class VarDoubleJumpInstruction extends  VarDoubleInstruction implements
         this.address = address;
     }
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         address = mutator.getNextInt();
+        return this;
     }
 }

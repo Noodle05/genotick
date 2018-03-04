@@ -3,6 +3,7 @@ package com.alphatica.genotick.mutator;
 import com.alphatica.genotick.data.ColumnAccess;
 import com.alphatica.genotick.genotick.RandomGenerator;
 import com.alphatica.genotick.instructions.Instruction;
+import com.alphatica.genotick.instructions.InstructionList;
 import com.alphatica.genotick.processor.Processor;
 
 import java.lang.reflect.Constructor;
@@ -54,9 +55,16 @@ class SimpleMutator implements Mutator {
     }
 
     @Override
-    public Instruction getRandomInstruction() {
-        int index = random.nextInt(totalInstructions);
-        return createNewInstruction(index);
+    public Instruction getRandomInstruction(InstructionList il) {
+        while(true) {
+            int index = random.nextInt(totalInstructions);
+            Instruction newInstruction = createNewInstruction(index).mutate(this);
+            double prevalence = newInstruction.getPrevalence(il);
+            
+            if(prevalence == 1.0 || prevalence >= random.nextDouble()) {
+                return newInstruction;
+            }
+        }
     }
 
     private Instruction createNewInstruction(int index) {

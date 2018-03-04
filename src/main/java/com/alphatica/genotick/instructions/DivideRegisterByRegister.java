@@ -2,13 +2,12 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class DivideRegisterByRegister extends RegRegInstruction {
+public class DivideRegisterByRegister extends RegRegInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 5202607381101727036L;
 
     private DivideRegisterByRegister(DivideRegisterByRegister i) {
-        this.setRegister1(i.getRegister1());
-        this.setRegister2(i.getRegister2());
+        super(i);
     }
 
     @SuppressWarnings("unused")

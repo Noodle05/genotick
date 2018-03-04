@@ -2,13 +2,12 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class SubtractDoubleFromVariable extends VarDoubleInstruction {
+public class SubtractDoubleFromVariable extends VarDoubleInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 8293191797685003121L;
 
     private SubtractDoubleFromVariable(SubtractDoubleFromVariable i) {
-        this.setVariableArgument(i.getVariableArgument());
-        this.setDoubleArgument(i.getDoubleArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

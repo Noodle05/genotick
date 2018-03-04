@@ -8,8 +8,7 @@ public class SwapVariables extends VarVarInstruction {
     private static final long serialVersionUID = -6328103475159894381L;
 
     private SwapVariables(SwapVariables i) {
-        this.setVariable1Argument(i.getVariable1Argument());
-        this.setVariable2Argument(i.getVariable2Argument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

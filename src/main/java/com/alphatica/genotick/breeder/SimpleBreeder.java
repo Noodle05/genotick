@@ -96,15 +96,9 @@ public class SimpleBreeder implements RobotBreeder {
         int instructionCount = settings.minimumRobotInstructions + Math.abs(mutator.getNextInt() % maximumRobotInstructionCount);
         final InstructionList main = robot.getMainFunction();
         while (--instructionCount >= 0) {
-            addInstructionToMain(main);
+            main.addInstruction(mutator.getRandomInstruction(main));
         }
         population.saveRobot(robot);
-    }
-
-    private void addInstructionToMain(InstructionList main) {
-        Instruction instruction = mutator.getRandomInstruction();
-        instruction.mutate(mutator);
-        main.addInstruction(instruction);
     }
 
     private void breedPopulationFromParents(Population population, List<RobotInfo> originalList) {
@@ -228,8 +222,7 @@ public class SimpleBreeder implements RobotBreeder {
 
     private void possiblyAddNewInstruction(InstructionList instructionList) {
         if (mutator.getAllowNewInstruction()) {
-            Instruction newInstruction = mutator.getRandomInstruction();
-            instructionList.addInstruction(newInstruction);
+            instructionList.addInstruction(mutator.getRandomInstruction(instructionList));
         }
     }
 

@@ -3,7 +3,7 @@ package com.alphatica.genotick.instructions;
 import com.alphatica.genotick.mutator.Mutator;
 import com.alphatica.genotick.processor.Processor;
 
-public class PercentileOfColumn extends RegRegInstruction {
+public class PercentileOfColumn extends RegRegInstruction implements MathInstruction {
 
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -329518949586814597L;
@@ -11,14 +11,12 @@ public class PercentileOfColumn extends RegRegInstruction {
     // This value is replaced before use by mutate()
     protected int percentile = 95;
 
-    @SuppressWarnings("unused")
-    public PercentileOfColumn() {
+    private PercentileOfColumn(PercentileOfColumn i) {
+        super(i);
     }
 
-    private PercentileOfColumn(PercentileOfColumn percentileOfColumn) {
-        this.setRegister1(percentileOfColumn.getRegister1());
-        this.setRegister2(percentileOfColumn.getRegister2());
-        this.percentile = percentileOfColumn.percentile;
+    @SuppressWarnings("unused")
+    public PercentileOfColumn() {
     }
 
     @Override
@@ -32,12 +30,18 @@ public class PercentileOfColumn extends RegRegInstruction {
     }
     
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         percentile = (Math.abs(mutator.getNextInt()) % 100) + 1;
+        return this;
     }
 
     public int getPercentile() {
         return percentile;
+    }
+
+    @Override 
+    public double getPrevalence(InstructionList il) {
+        return getDecayingPrevalence(il, this, this.getClass(), 1.0);
     }
 }

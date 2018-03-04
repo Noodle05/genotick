@@ -7,9 +7,7 @@ public class JumpIfVariableEqualVariable extends VarVarJumpInstruction {
     private static final long serialVersionUID = 7095626127058648815L;
 
     private JumpIfVariableEqualVariable(JumpIfVariableEqualVariable i) {
-        this.setVariable1Argument(i.getVariable1Argument());
-        this.setVariable2Argument(i.getVariable2Argument());
-        this.setAddress(i.getAddress());
+        super(i);
     }
 
     @SuppressWarnings("unused")

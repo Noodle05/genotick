@@ -7,7 +7,7 @@ public class ReturnVariableAsResult extends VarInstruction {
     private static final long serialVersionUID = -1366004911226575165L;
 
     private ReturnVariableAsResult(ReturnVariableAsResult i) {
-        this.setVariableArgument(i.getVariableArgument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

@@ -7,8 +7,7 @@ public class JumpIfVariableGreaterThanZero extends VarJumpInstruction {
     private static final long serialVersionUID = -9053565445759017543L;
 
     private JumpIfVariableGreaterThanZero(JumpIfVariableGreaterThanZero i) {
-        this.setVariableArgument(i.getVariableArgument());
-        this.setAddress(i.getAddress());
+        super(i);
     }
 
     @SuppressWarnings("unused")

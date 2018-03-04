@@ -2,13 +2,12 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class NaturalLogarithmOfVariable extends VarVarInstruction {
+public class NaturalLogarithmOfVariable extends VarVarInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -3112125542251877233L;
 
     private NaturalLogarithmOfVariable(NaturalLogarithmOfVariable i) {
-        this.setVariable1Argument(i.getVariable1Argument());
-        this.setVariable2Argument(i.getVariable2Argument());
+        super(i);
     }
 
     @SuppressWarnings("unused")

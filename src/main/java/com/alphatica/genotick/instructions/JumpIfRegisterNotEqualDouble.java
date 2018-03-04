@@ -7,9 +7,7 @@ public class JumpIfRegisterNotEqualDouble extends RegDoubleJumpInstruction {
     private static final long serialVersionUID = -8395514990644799759L;
 
     private JumpIfRegisterNotEqualDouble(JumpIfRegisterNotEqualDouble i) {
-        this.setRegister(i.getRegister());
-        this.setDoubleArgument(i.getDoubleArgument());
-        this.setAddress(i.getAddress());
+        super(i);
     }
 
     @SuppressWarnings("unused")

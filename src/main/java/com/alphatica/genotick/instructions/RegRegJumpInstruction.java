@@ -8,9 +8,15 @@ abstract class RegRegJumpInstruction extends  RegRegInstruction implements JumpI
 
     private int address;
 
-    RegRegJumpInstruction() {
+    protected RegRegJumpInstruction(RegRegJumpInstruction i) {
+        super(i);
+        this.address = i.address;
+    }
+    protected RegRegJumpInstruction() {
+        super();
         address = 0;
     }
+    
     @Override
     public int getAddress() {
         return address;
@@ -21,8 +27,9 @@ abstract class RegRegJumpInstruction extends  RegRegInstruction implements JumpI
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         super.mutate(mutator);
         address = mutator.getNextInt();
+        return this;
     }
 }

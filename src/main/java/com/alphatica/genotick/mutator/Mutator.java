@@ -2,9 +2,10 @@ package com.alphatica.genotick.mutator;
 
 import com.alphatica.genotick.data.ColumnAccess;
 import com.alphatica.genotick.instructions.Instruction;
+import com.alphatica.genotick.instructions.InstructionList;
 
 public interface Mutator {
-    Instruction getRandomInstruction();
+    Instruction getRandomInstruction(InstructionList il);
 
     boolean getAllowInstructionMutation();
 

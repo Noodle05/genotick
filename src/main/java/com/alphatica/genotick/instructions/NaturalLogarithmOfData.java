@@ -2,14 +2,12 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-public class NaturalLogarithmOfData extends DataRegInstruction {
+public class NaturalLogarithmOfData extends DataRegInstruction implements MathInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -3598160310785452494L;
 
     private NaturalLogarithmOfData(NaturalLogarithmOfData i) {
-        this.setDataOffsetIndex(i.getDataOffsetIndex());
-        this.setDataTableIndex(i.getDataColumnIndex());
-        this.setRegister(i.getRegister());
+        super(i);
     }
 
     @SuppressWarnings("unused")

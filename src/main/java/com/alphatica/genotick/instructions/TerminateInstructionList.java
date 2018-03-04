@@ -15,16 +15,21 @@ public class TerminateInstructionList extends Instruction {
         processor.execute(this);
     }
 
-
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         /*
         Empty. Nothing to mutate.
          */
+        return this;
     }
 
     @Override
     public Instruction copy() {
         return new TerminateInstructionList();
+    }
+    
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
     }
 }

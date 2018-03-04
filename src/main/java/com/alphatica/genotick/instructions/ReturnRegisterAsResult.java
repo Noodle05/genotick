@@ -7,7 +7,7 @@ public class ReturnRegisterAsResult extends RegInstruction {
     private static final long serialVersionUID = -884883538461289844L;
 
     private ReturnRegisterAsResult(ReturnRegisterAsResult i) {
-        this.setRegister(i.getRegister());
+        super(i);
     }
 
     @SuppressWarnings("unused")

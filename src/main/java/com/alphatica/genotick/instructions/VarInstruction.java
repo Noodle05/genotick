@@ -8,6 +8,14 @@ abstract class VarInstruction extends Instruction {
 
     private int variableArgument;
 
+    protected VarInstruction(VarInstruction i) {
+        this.variableArgument = i.variableArgument;
+    }
+    
+    @SuppressWarnings("unused")
+    public VarInstruction() {
+    }
+
     public int getVariableArgument() {
         return variableArgument;
     }
@@ -17,7 +25,13 @@ abstract class VarInstruction extends Instruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         variableArgument = mutator.getNextInt();
+        return this;
+    }
+
+    @Override
+    public double getPrevalence(InstructionList il) {
+        return 1.0;
     }
 }

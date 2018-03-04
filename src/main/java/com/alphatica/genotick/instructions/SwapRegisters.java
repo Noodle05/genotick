@@ -8,8 +8,7 @@ public class SwapRegisters extends RegRegInstruction {
     private static final long serialVersionUID = -3433775138789900573L;
 
     private SwapRegisters(SwapRegisters i) {
-        this.setRegister1(i.getRegister1());
-        this.setRegister2(i.getRegister2());
+        super(i);
     }
 
     @SuppressWarnings("unused")

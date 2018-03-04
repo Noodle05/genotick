@@ -7,9 +7,7 @@ public class JumpIfVariableEqualRegister extends RegVarJumpInstruction {
     private static final long serialVersionUID = -8121933377560453966L;
 
     private JumpIfVariableEqualRegister(JumpIfVariableEqualRegister i) {
-        this.setRegister(i.getRegister());
-        this.setVariableArgument(i.getVariableArgument());
-        this.setAddress(i.getAddress());
+        super(i);
     }
 
     @SuppressWarnings("unused")

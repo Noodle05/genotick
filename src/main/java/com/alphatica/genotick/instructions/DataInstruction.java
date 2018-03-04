@@ -8,6 +8,15 @@ abstract public class DataInstruction extends Instruction {
     private int dataTableIndex;
     private int dataOffsetIndex;
 
+    protected DataInstruction(DataInstruction i) {
+        this.dataTableIndex = i.dataTableIndex;
+        this.dataOffsetIndex = i.dataOffsetIndex;
+    }
+    
+    @SuppressWarnings("unused")
+    public DataInstruction() {
+    }
+
     void setDataTableIndex(int dataTableIndex) {
         this.dataTableIndex = dataTableIndex;
     }
@@ -25,8 +34,9 @@ abstract public class DataInstruction extends Instruction {
     }
 
     @Override
-    public void mutate(Mutator mutator) {
+    public Instruction mutate(Mutator mutator) {
         dataTableIndex = mutator.getNextColumn();
         dataOffsetIndex = mutator.getNextInt();
+        return this;
     }
 }
