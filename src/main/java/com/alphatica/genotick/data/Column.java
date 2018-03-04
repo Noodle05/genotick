@@ -39,7 +39,7 @@ public class Column {
         };
     }
     
-    public static class Array {
+    public static class OHLCArray {
         public static final int OHLC[] = {
                 Column.OHLC.OPEN,
                 Column.OHLC.HIGH,

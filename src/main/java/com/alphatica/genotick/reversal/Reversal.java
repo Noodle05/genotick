@@ -26,8 +26,8 @@ public class Reversal {
     
     public DataSetName getReversedName() {
         if (reversedName == null) {
-            final DataSetName orginalName = originalSet.getName();
-            reversedName = createReversedDataSetName(orginalName);
+            final DataSetName original = originalSet.getName();
+            reversedName = createReversedDataSetName(original);
         }
         return reversedName;
     }
@@ -70,7 +70,7 @@ public class Reversal {
         double[] lastReversed = dataLines.getOhlcValuesCopy(0);
         for (int line = 0; line < lineCount; ++line) {
             double[] currentOriginal = dataLines.getOhlcValuesCopy(line);
-            double[] currentReversed = createReversedOhlc(lastOriginal, currentOriginal, lastReversed);
+            double[] currentReversed = createReversedOHLC(lastOriginal, currentOriginal, lastReversed);
             dataLines.setOhlcValues(line, currentReversed);
             lastOriginal = currentOriginal;
             lastReversed = currentReversed;
@@ -78,7 +78,7 @@ public class Reversal {
         normalize(dataLines);
     }
     
-    private static double[] createReversedOhlc(double[] lastOriginal, double[] original, double[] lastReversed) {
+    private static double[] createReversedOHLC(double[] lastOriginal, double[] original, double[] lastReversed) {
         final double[] reversed = new double[original.length];
         final double openDiff = original[Column.OHLC.OPEN] - lastOriginal[Column.OHLC.CLOSE];
         final double highDiff = original[Column.OHLC.HIGH] - original[Column.OHLC.OPEN];
@@ -103,7 +103,7 @@ public class Reversal {
         if (lowest < threshold) {
             final double negOffset = lowest - threshold;
             for (int line = 0; line < lineCount; ++line) {
-                for (int column : Column.Array.OHLC) {
+                for (int column : Column.OHLCArray.OHLC) {
                     final double value = dataLines.getOhlcValue(line, column);
                     dataLines.setOhlcValue(line, column, value - negOffset);
                 }

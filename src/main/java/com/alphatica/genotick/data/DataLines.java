@@ -109,18 +109,18 @@ public class DataLines {
     }
     
     public double[] getOhlcValuesCopy(int line) {
-        double[] ohlcCopy = new double[Column.Array.OHLC.length];
-        for (int column : Column.Array.OHLC) {
+        double[] ohlcCopy = new double[Column.OHLCArray.OHLC.length];
+        for (int column : Column.OHLCArray.OHLC) {
             ohlcCopy[column] = getOhlcValue(line, column);
         }
         return ohlcCopy;
     }
     
     public void setOhlcValues(int line, double[] ohlcValues) {
-        if (ohlcValues.length != Column.Array.OHLC.length) {
+        if (ohlcValues.length != Column.OHLCArray.OHLC.length) {
             throw new DataException(format("Given column count '%d' for line '%d' does not match the expected column count '%d'.", ohlcValues.length, line, 4));
         }
-        for (int column : Column.Array.OHLC) {
+        for (int column : Column.OHLCArray.OHLC) {
             setOhlcValue(line, column, ohlcValues[column]);
         }
     }
